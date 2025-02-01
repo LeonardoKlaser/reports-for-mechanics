@@ -11,7 +11,12 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primaryButton: '#F97316',
+        secondaryButton: '#6B7280'
       },
+      width:{
+        300: "300px",
+      }
     },
   },
   plugins: [],
