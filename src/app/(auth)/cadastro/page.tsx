@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from "@/hooks/use-toast"
 import Form from "next/form"
 import { validateForm } from "./validations/validations"
+import registerAction from "./{actions}/registerAction"
 
 // Server action to handle registration
 async function registerUser(formData: FormData) {
@@ -23,29 +24,29 @@ export default function RegisterPage() {
   const router = useRouter()
 
 
-  const handleSubmit = async (formData: FormData) => {
-    const response = validateForm(formData);
-    if (response.success == true) {
-      try {
-        const result = await registerUser(formData)
-        if (result.success) {
-            toast({
-            title: "Success",
-            description: result.message,
-          })
-          router.push("/login") // após registrar manda para a pagina de login
-        }
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Registration failed. Please try again.",
-          variant: "destructive",
-        })
-      }
-    }else{
-        setErrors(response.errors);
-    }
-  }
+  // const handleSubmit = async (formData: FormData) => {
+  //   const response = validateForm(formData);
+  //   if (response.success == true) {
+  //     try {
+  //       const result = await registerUser(formData)
+  //       if (result.success) {
+  //           toast({
+  //           title: "Success",
+  //           description: result.message,
+  //         })
+  //         router.push("/login") // após registrar manda para a pagina de login
+  //       }
+  //     } catch (error) {
+  //       toast({
+  //         title: "Error",
+  //         description: "Registration failed. Please try again.",
+  //         variant: "destructive",
+  //       })
+  //     }
+  //   }else{
+  //       setErrors(response.errors);
+  //   }
+  // }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -55,22 +56,22 @@ export default function RegisterPage() {
           <CardDescription>Create a new account</CardDescription>
         </CardHeader>
         <CardContent>
-          <Form action={handleSubmit}>
+          <Form action={registerAction}>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="name">Name</Label>
                 <Input id="name" name="name" type="text" required />
-                {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
+                {/* {errors.name && <p className="text-sm text-red-500">{errors.name}</p>} */}
               </div>
               <div>
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" name="email" type="email" required />
-                {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+                {/* {errors.email && <p className="text-sm text-red-500">{errors.email}</p>} */}
               </div>
               <div>
                 <Label htmlFor="password">Password</Label>
                 <Input id="password" name="password" type="password" required />
-                {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
+                {/* {errors.password && <p className="text-sm text-red-500">{errors.password}</p>} */}
               </div>
             </div>
             <CardFooter className="flex justify-end mt-4 p-0">

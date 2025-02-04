@@ -1,3 +1,4 @@
+'use client'
 import { useState } from "react"
 
 const [errors, setErrors] = useState<{ [key: string]: string }>({})
