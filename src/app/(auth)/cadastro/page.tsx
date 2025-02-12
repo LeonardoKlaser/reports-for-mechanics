@@ -2,9 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import RegisterForm from "./components/register-form"
 import { auth } from "../../../../auth";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 export default async function RegisterPage() {
-  const session = await auth();
+  const session = await getServerSession();
   if(session){
     return redirect("/");
   }

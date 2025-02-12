@@ -2,9 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import LoginForm from "./components/loginForm"
 import { auth } from "../../../../auth"
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 export default async function LoginPage() {
-  const session = await auth();
+  const session = await getServerSession();
   if(session){
     return redirect("/");
   }

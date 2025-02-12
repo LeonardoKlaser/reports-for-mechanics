@@ -14,6 +14,7 @@ export default {
   			foreground: 'hsl(var(--foreground))',
   			primaryButton: '#F97316',
   			secondaryButton: '#6B7280',
+			navMenu: '#1E3A8A',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
