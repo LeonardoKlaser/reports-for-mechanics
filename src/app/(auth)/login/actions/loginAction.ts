@@ -1,6 +1,6 @@
-'use server'
 
-import { signIn } from "../../../../../auth";
+import {signIn} from "next-auth/react"
+
 
 
 export default async function loginAction(_prevState: any, formData: FormData){
@@ -9,7 +9,7 @@ export default async function loginAction(_prevState: any, formData: FormData){
     const password = formData.get("password") as string;
     try{
         //await signin
-        await signIn('credentials', {email, password, redirect: true});
+        await signIn('credentials', {email, password, redirect: false});
         //se sucesso, redireciona home
         return{success: true};
     }catch(e:any){

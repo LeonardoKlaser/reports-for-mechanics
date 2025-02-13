@@ -8,9 +8,10 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import logoutAction from "@/app/(auth)/(logout)/logoutAction";
 import Form from "next/form";
+import { getServerAuthSession } from "@/backend/authentication/auth"
 
 export function NavMenu({session}: {session: any}) {
-
+  
   return (
     <nav className="flex items-center justify-between p-4 bg-navMenu">
       <div className="flex items-center space-x-5">

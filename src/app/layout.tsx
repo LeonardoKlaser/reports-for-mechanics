@@ -3,6 +3,7 @@ import {Poppins} from "next/font/google";
 import "./globals.css"
 import { NavMenu } from "@/components/nav-menu/nav-menu";
 import { getServerSession } from "next-auth";
+import { getServerAuthSession } from "@/backend/authentication/auth";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: [
@@ -27,11 +28,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
+  const session = await getServerAuthSession();
+  const user = session?.user;
+  console.log(user);
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <NavMenu session={session}/>
+        <NavMenu session={user}/>
         {children}
       </body>
     </html>
