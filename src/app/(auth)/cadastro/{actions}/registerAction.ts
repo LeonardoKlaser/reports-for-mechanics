@@ -1,7 +1,7 @@
 'use server'
 import { toast } from "@/hooks/use-toast";
 import { validateForm } from "../validations/validations"
-import db from "@/lib/db";
+import {db} from "@/lib/db";
 import {hashSync} from "bcrypt-ts"
 import { Alert } from "@/components/ui/alert";
 import { error } from "console";

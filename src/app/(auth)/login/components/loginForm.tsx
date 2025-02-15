@@ -8,33 +8,29 @@ import Link from "next/link"
 import Form from "next/form"
 import loginAction from "../actions/loginAction"
 import { useActionState } from "react"
-import {signIn} from "next-auth/react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
+import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const {toast} = useToast();
+
   async function onSubmit(values: FormData){
     const email = values.get("email") as string;
     const password = values.get("password") as string;
     try{
       debugger;
       setLoading(true);
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-      // const res = await formAction(values);
-      if(res?.ok){
+      const res = await loginAction(null, values);
+      if(res?.success !== false){
         toast({
           description: "Usuário logado com sucesso!"
         })
-        router.push("/");
+        router.push("/dashboard");
       }else throw new Error();
     }catch{
       setError(true)
@@ -47,7 +43,7 @@ export default function LoginForm() {
       setLoading(false);
     }
   }
-  debugger
+  
     return(
       <>
       {error && (

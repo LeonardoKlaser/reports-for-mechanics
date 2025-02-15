@@ -1,61 +1,40 @@
-import { findUserByCredentials } from "@/lib/user";
-import { User } from "@prisma/client";
-import { getServerSession, type DefaultSession, type NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthConfig } from "next-auth";
+import {PrismaAdapter} from '@auth/prisma-adapter'
+import {db} from "@/lib/db";
 import Credentials from "next-auth/providers/credentials";
-// import {LoginHandler} from "../user/LoginHandler";
-// import {UserRepositoryMemory} from "../user/userRepositoryMemory";
+import { findUserByCredentials } from "@/lib/user";
 
-declare module "next-auth"{
-    interface Session extends DefaultSession{
-        user: User;
-    }
-}
-
-// export type User = {
-//     id: string;
-// } & DefaultSession["user"];
-
-export const authOptions: NextAuthOptions = {
-    session: {
-        strategy: "jwt",
-    },
-    callbacks: {
-        session: ({session, token}) =>{
-            debugger;
-            return{
-                ...session,
-                user: {
-                    ...session.user,
-                    id: token.sub,
-                },
-            };
-        },
-    },
-    pages: {
-        signIn: "/login"
-    },
-    providers:[
+export const {handlers: {GET, POST}, auth} = NextAuth({
+    adapter: PrismaAdapter(db),
+    providers: [
         Credentials({
-            credentials:{
+            credentials: {
                 email : {},
-                name: {},
                 password: {}
             },
             authorize: async(credentials) =>{
-                debugger;
-                console.log("credentials", credentials)
-                
-                // debugger;
-                // if(!credentials?.email || !credentials.password){
-                //     return null;
-                // }
-                //procura usuario, caso exista retorna ele, se nao retorna null
-                const usuario = await findUserByCredentials(credentials?.email as string, credentials?.password as string);
-                return usuario;
-                
+                debugger
+                const user = await findUserByCredentials(credentials?.email as string, credentials?.password as string);
+                return user;
             }
         })
-    ] 
-};
-
-export const getServerAuthSession = () => getServerSession(authOptions);
+    ],
+    session: {
+        strategy: 'jwt',
+    },
+    secret: process.env.NEXTAUTH_SECRET,
+    callbacks:{
+        async session({session , user}){
+            if(user){    
+                session.user.id = user.id;
+            }
+            return session;
+        },
+        async jwt({token, user}){
+            if(user){
+                token.id = user.id
+            }
+            return token
+        }
+    }
+} satisfies NextAuthConfig)

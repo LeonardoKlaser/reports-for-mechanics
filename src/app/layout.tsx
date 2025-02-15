@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import {Poppins} from "next/font/google";
 import "./globals.css"
 import { NavMenu } from "@/components/nav-menu/nav-menu";
-import { getServerSession } from "next-auth";
-import { getServerAuthSession } from "@/backend/authentication/auth";
+import { SessionProvider } from "next-auth/react";
+import { PropsWithChildren } from "react";
+import { Session } from "next-auth";
+// import { getServerAuthSession } from "@/backend/authentication/auth";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: [
@@ -24,18 +26,17 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
+  session,
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const session = await getServerAuthSession();
-  const user = session?.user;
-  console.log(user);
+}: PropsWithChildren<{session: Session | null}>) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <NavMenu session={user}/>
-        {children}
+        <SessionProvider session={session}>
+          <NavMenu/>
+        
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

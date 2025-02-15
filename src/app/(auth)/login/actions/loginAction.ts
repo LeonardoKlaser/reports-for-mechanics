@@ -8,10 +8,13 @@ export default async function loginAction(_prevState: any, formData: FormData){
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     try{
-        //await signin
-        await signIn('credentials', {email, password, redirect: false});
-        //se sucesso, redireciona home
-        return{success: true};
+        const response = await signIn('credentials', {email, password, redirect: false});
+
+        if(response?.error === "" || response?.error === null ){
+            return{success: true};
+        }else if(response?.error === "CredentialsSignin"){
+            return {success: false, message: "Dados do login incorretos"}
+        }    
     }catch(e:any){
         if(e.type === "CredentialsSignin"){
             return {success: false, message: "Dados do login incorretos"}

@@ -1,12 +1,14 @@
-import {PrismaClient} from '@prisma/client'
+import {PrismaClient} from "@prisma/client"
 
-declare global{
-    var prisma: PrismaClient | undefined
-}
-const db = globalThis.prisma || new PrismaClient();
+// declare global{
+//     var prisma: PrismaClient | undefined
+// }
+// export const db = globalThis.prisma || new PrismaClient();
 
-if(process.env.NODE_ENV !== 'production'){
-    globalThis.prisma = db;
-};
+// if(process.env.NODE_ENV !== 'production'){
+//     globalThis.prisma = db;
+// };
 
-export default db;
+const globalFormPrisma = globalThis as unknown as {prisma: PrismaClient};
+export const db = globalFormPrisma.prisma || new PrismaClient();
+if(process.env.NODE_ENV !== 'production') globalFormPrisma.prisma = db;
