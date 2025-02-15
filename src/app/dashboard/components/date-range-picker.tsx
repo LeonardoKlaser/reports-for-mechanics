@@ -53,4 +53,3 @@ export function CalendarDateRangePicker({ className }: React.HTMLAttributes<HTML
     </div>
   )
 }
-

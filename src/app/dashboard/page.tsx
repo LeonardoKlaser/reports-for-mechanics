@@ -19,25 +19,8 @@ export const metadata: Metadata = {
 }
 
 export default function DashboardPage() {
-  return (
-    <>
-      <div className="md:hidden">
-        <Image
-          src="/examples/dashboard-light.png"
-          width={1280}
-          height={866}
-          alt="Dashboard"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/dashboard-dark.png"
-          width={1280}
-          height={866}
-          alt="Dashboard"
-          className="hidden dark:block"
-        />
-      </div>
-      <div className="hidden flex-col md:flex">
+    return (
+      <div className="flex min-h-screen flex-col">
         <div className="border-b">
           <div className="flex h-16 items-center px-4">
             <TeamSwitcher />
@@ -48,73 +31,73 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-        <div className="flex-1 space-y-4 p-8 pt-6">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-            <div className="flex items-center space-x-2">
+        <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
+          <div className="flex flex-col space-y-2 md:flex-row md:items-center md:justify-between">
+            <h2 className="text-3xl font-bold tracking-tight">Painel de Controle</h2>
+            <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
               <CalendarDateRangePicker />
               <Button>
                 <Download className="mr-2 h-4 w-4" />
-                Download Reports
+                Baixar Relatórios
               </Button>
             </div>
           </div>
           <Tabs defaultValue="overview" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsList className="flex flex-wrap">
+              <TabsTrigger value="overview">Visão Geral</TabsTrigger>
               <TabsTrigger value="analytics" disabled>
-                Analytics
+                Análises
               </TabsTrigger>
-              <TabsTrigger value="reports">Reports</TabsTrigger>
-              <TabsTrigger value="notifications">Notifications</TabsTrigger>
+              <TabsTrigger value="reports">Relatórios</TabsTrigger>
+              <TabsTrigger value="notifications">Notificações</TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Total Reports</CardTitle>
+                    <CardTitle className="text-sm font-medium">Total de Relatórios</CardTitle>
                     <FileText className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">245</div>
-                    <p className="text-xs text-muted-foreground">+20% from last month</p>
+                    <p className="text-xs text-muted-foreground">+20% em relação ao mês passado</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Active Clients</CardTitle>
+                    <CardTitle className="text-sm font-medium">Clientes Ativos</CardTitle>
                     <Users className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">42</div>
-                    <p className="text-xs text-muted-foreground">+15% from last month</p>
+                    <p className="text-xs text-muted-foreground">+15% em relação ao mês passado</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Revenue</CardTitle>
+                    <CardTitle className="text-sm font-medium">Receita</CardTitle>
                     <DollarSign className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">$5,231</div>
-                    <p className="text-xs text-muted-foreground">+10% from last month</p>
+                    <p className="text-xs text-muted-foreground">+10% em relação ao mês passado</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Active Subscriptions</CardTitle>
+                    <CardTitle className="text-sm font-medium">Assinaturas Ativas</CardTitle>
                     <CreditCard className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">38</div>
-                    <p className="text-xs text-muted-foreground">+7 since last month</p>
+                    <p className="text-xs text-muted-foreground">+7 desde o mês passado</p>
                   </CardContent>
                 </Card>
               </div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
                 <Card className="col-span-4">
                   <CardHeader>
-                    <CardTitle>Overview</CardTitle>
+                    <CardTitle>Visão Geral</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
                     <Overview />
@@ -122,8 +105,8 @@ export default function DashboardPage() {
                 </Card>
                 <Card className="col-span-3">
                   <CardHeader>
-                    <CardTitle>Recent Reports</CardTitle>
-                    <CardDescription>You have generated 12 reports this month.</CardDescription>
+                    <CardTitle>Relatórios Recentes</CardTitle>
+                    <CardDescription>Você gerou 12 relatórios este mês.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <RecentReports />
@@ -135,48 +118,48 @@ export default function DashboardPage() {
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card className="col-span-2">
                   <CardHeader>
-                    <CardTitle>Quick Actions</CardTitle>
+                    <CardTitle>Ações Rápidas</CardTitle>
                   </CardHeader>
                   <CardContent className="grid gap-4 md:grid-cols-2">
                     <Button className="w-full">
-                      <Plus className="mr-2 h-4 w-4" /> New Report
+                      <Plus className="mr-2 h-4 w-4" /> Novo Relatório
                     </Button>
                     <Button variant="outline" className="w-full">
-                      <FileText className="mr-2 h-4 w-4" /> View All Reports
+                      <FileText className="mr-2 h-4 w-4" /> Ver Todos os Relatórios
                     </Button>
                     <Button variant="outline" className="w-full">
-                      <Settings className="mr-2 h-4 w-4" /> Report Settings
+                      <Settings className="mr-2 h-4 w-4" /> Configurações de Relatório
                     </Button>
                     <Button variant="outline" className="w-full">
-                      <Lock className="mr-2 h-4 w-4" /> Manage Access
+                      <Lock className="mr-2 h-4 w-4" /> Gerenciar Acesso
                     </Button>
                   </CardContent>
                 </Card>
                 <Card className="col-span-2">
                   <CardHeader>
-                    <CardTitle>Upcoming Maintenance</CardTitle>
-                    <CardDescription>Scheduled maintenance for your clients</CardDescription>
+                    <CardTitle>Manutenção Programada</CardTitle>
+                    <CardDescription>Manutenção agendada para seus clientes</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       <div className="flex items-center">
                         <Car className="mr-2 h-4 w-4 text-muted-foreground" />
                         <div className="flex-1 space-y-1">
-                          <p className="text-sm font-medium leading-none">Toyota Camry - Oil Change</p>
-                          <p className="text-sm text-muted-foreground">Due in 3 days</p>
+                          <p className="text-sm font-medium leading-none">Toyota Camry - Troca de Óleo</p>
+                          <p className="text-sm text-muted-foreground">Em 3 dias</p>
                         </div>
                         <Button variant="outline" size="sm">
-                          Remind
+                          Lembrar
                         </Button>
                       </div>
                       <div className="flex items-center">
                         <Car className="mr-2 h-4 w-4 text-muted-foreground" />
                         <div className="flex-1 space-y-1">
-                          <p className="text-sm font-medium leading-none">Ford F-150 - Tire Rotation</p>
-                          <p className="text-sm text-muted-foreground">Due in 5 days</p>
+                          <p className="text-sm font-medium leading-none">Ford F-150 - Rodízio de Pneus</p>
+                          <p className="text-sm text-muted-foreground">Em 5 dias</p>
                         </div>
                         <Button variant="outline" size="sm">
-                          Remind
+                          Lembrar
                         </Button>
                       </div>
                     </div>
@@ -187,7 +170,6 @@ export default function DashboardPage() {
           </Tabs>
         </div>
       </div>
-    </>
-  )
-}
+    )
+  }
 

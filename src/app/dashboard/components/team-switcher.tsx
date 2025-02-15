@@ -87,8 +87,8 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
         <PopoverContent className="w-[200px] p-0">
           <Command>
             <CommandList>
-              <CommandInput placeholder="Search team..." />
-              <CommandEmpty>No team found.</CommandEmpty>
+              <CommandInput placeholder="Procurar time..." />
+              <CommandEmpty>Nenhum time encontrado.</CommandEmpty>
               {groups.map((group) => (
                 <CommandGroup key={group.label} heading={group.label}>
                   {group.teams.map((team) => (
@@ -141,8 +141,8 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
       </Popover>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create team</DialogTitle>
-          <DialogDescription>Add a new team to manage products and customers.</DialogDescription>
+          <DialogTitle>Criar time</DialogTitle>
+          <DialogDescription>Adicione uma nova equipe para gerenciar produtos e clientes.</DialogDescription>
         </DialogHeader>
         <div>
           <div className="space-y-4 py-2 pb-4">
@@ -151,7 +151,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
               <Input id="name" placeholder="Acme Inc." />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="plan">Subscription plan</Label>
+              <Label htmlFor="plan">Plano de assinatura</Label>
               <Select>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a plan" />
@@ -159,11 +159,13 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
                 <SelectContent>
                   <SelectItem value="free">
                     <span className="font-medium">Free</span> -{" "}
-                    <span className="text-muted-foreground">Trial for two weeks</span>
+                    <span className="text-muted-foreground">
+                    Teste por duas semanas</span>
                   </SelectItem>
                   <SelectItem value="pro">
                     <span className="font-medium">Pro</span> -{" "}
-                    <span className="text-muted-foreground">$9/month per user</span>
+                    <span className="text-muted-foreground">
+                    US$ 9/mês por usuário</span>
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -172,7 +174,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => setShowNewTeamDialog(false)}>
-            Cancel
+            Cancelar
           </Button>
           <Button type="submit">Continue</Button>
         </DialogFooter>
