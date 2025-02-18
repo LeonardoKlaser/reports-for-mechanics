@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { redirect } from "next/navigation";
 import logoutAction from "@/app/(auth)/(logout)/logoutAction";
-import Form from "next/form";
 import { useSession } from "next-auth/react"
 
 export function NavMenu() {
