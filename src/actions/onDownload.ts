@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios"
 import { useToast } from "@/hooks/use-toast"
-
-const {toast} = useToast();
+import { downloadPdfServices } from "@/app/services/downloadPdfService";
 interface DownloadParams{
     userId: string,
     documentId: string
@@ -11,17 +10,16 @@ interface ErrorResponse{
     message?: string
 }
 
-export const onDownload = async ({userId, documentId} : DownloadParams) => {
+export async function onDownload ({userId, documentId} : DownloadParams,
+    toast: (args: { title: string; description: string; variant?: "destructive" }) => void
+)  {
     try{
-        const res = await axios.post(
-            `/api/generate-pdf/${userId}`, 
-            {documentId}, 
-            {responseType: "arraybuffer"} //manipular dados binários para o PDF
-        );
-        if(res.status == 200){
+        debugger;
+        const res = await downloadPdfServices.downloadPdf({userId: userId, documentId: documentId});
+        if(res){
             toast({title: "PDF gerado com sucesso", description: "Iniciaindo download"});
 
-            const blob = new Blob([res.data], {type: "application/pdf"}); // converte a resposta para um blob
+            const blob = new Blob([res], {type: "application/pdf"}); // converte a resposta para um blob
             const url = window.URL.createObjectURL(blob); // cria link de download temporario
             const link = document.createElement("a"); 
             link.href = url;
