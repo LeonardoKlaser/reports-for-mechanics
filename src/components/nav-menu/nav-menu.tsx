@@ -31,6 +31,11 @@ export function NavMenu() {
             <Button onClick={() => {onDownload({userId: '12', documentId: "12"}, toast)}}>
               Teste PDF
             </Button>
+            {data?.user && (
+              <Button onClick={() => redirect("/dashboard")}>
+                Dashboard
+              </Button>
+            )}
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

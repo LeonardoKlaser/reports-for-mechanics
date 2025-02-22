@@ -20,10 +20,7 @@ export default function LoginForm() {
   const {toast} = useToast();
 
   async function onSubmit(values: FormData){
-    const email = values.get("email") as string;
-    const password = values.get("password") as string;
     try{
-      debugger;
       setLoading(true);
       const res = await loginAction(null, values);
       if(res?.success !== false){
