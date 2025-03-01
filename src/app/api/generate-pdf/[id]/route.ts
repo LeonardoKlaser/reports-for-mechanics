@@ -16,7 +16,7 @@ export const POST = async (req: Request, context: { params: { id: string } }) =>
 
         const htmlContent = await RenderPdf();
 
-        const pdfBuffer = await generatePdf(htmlContent, "aaa", true);
+        const pdfBuffer = await generatePdf(htmlContent.document, "aaa", true, htmlContent.header);
 
         return new Response(pdfBuffer, {
             status: 200,
