@@ -1,10 +1,7 @@
 'use server'
-import { toast } from "@/hooks/use-toast";
-import { validateForm } from "../validations/validations"
+/* eslint-disable */
 import {db} from "@/lib/db";
 import {hashSync} from "bcrypt-ts"
-import { Alert } from "@/components/ui/alert";
-import { error } from "console";
 export default async function registerAction(_prevState: any, formData: FormData) {
     const entries = Array.from(formData.entries());
     const data = Object.fromEntries(entries) as {

@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import RegisterForm from "./components/register-form"
-import { redirect } from "next/navigation";
 
 export default async function RegisterPage() {
   return (

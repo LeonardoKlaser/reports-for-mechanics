@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { LogOut } from "lucide-react"
 import { useSession } from "next-auth/react"
-import { redirect } from "next/dist/server/api-utils"
 import { useRouter } from "next/navigation"
 
 export default function AccountPage() {

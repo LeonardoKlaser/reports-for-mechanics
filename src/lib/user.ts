@@ -2,9 +2,9 @@ import { compareSync } from "bcrypt-ts";
 import {db} from "./db";
 
 type User = {
-    email: string,
+    email: string | null,
     password? : string,
-    name: string
+    name: string | null
     id: string 
 }
 export async function findUserByCredentials(email: string, password: string) : Promise<User | null>{

@@ -1,6 +1,4 @@
 import DocumentTemplate from "@/components/DocumentTemplate";
-import HeaderTemplate from "@/components/headerTemplate";
-
 export default async function test(){
     return(
         <>

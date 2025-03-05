@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import { CreditCard, DollarSign, Download, Users, FileText, Plus, Settings, Lock, Car } from "lucide-react"
 
 import { Button } from "@/components/ui/button"

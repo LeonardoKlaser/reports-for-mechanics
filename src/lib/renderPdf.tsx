@@ -1,18 +1,17 @@
 import DocumentTemplate from "@/components/DocumentTemplate";
 import HeaderTemplate from "@/components/headerTemplate";
-import { Header } from "@radix-ui/react-accordion";
-import React, { createElement } from "react";
+import React from "react";
 
 
-interface DocumentData {
-  title: string;
-  content: string;
-}
+// interface DocumentData {
+//   title: string;
+//   content: string;
+// }
 
-interface UserData {
-  name: string;
-  email: string;
-}
+// interface UserData {
+//   name: string;
+//   email: string;
+// }
 
 export default async function RenderPdf()  {
     const { renderToString } = await import("react-dom/server");

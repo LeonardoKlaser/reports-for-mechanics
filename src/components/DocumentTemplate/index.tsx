@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 
 interface DocumentTemplateProps {
@@ -15,6 +16,7 @@ interface DocumentTemplateProps {
 }
 
 const DocumentTemplate = ({ documentData, userData, images }: DocumentTemplateProps) => {
+  console.log(userData, documentData);
   const labels = [
     "Frente", "Traseira", "Placa", "KM", "Compartimento motor", "Motor",
     "Câmbio", "Etiqueta ETA Motor", "Chassi", "Foto eta coluna", "Data Cinto Segurança", "Gravação do vidro", "Torre amort diant/direita", "Torre amort diant/esquer",

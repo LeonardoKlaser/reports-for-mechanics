@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from "axios";
 
 interface DownloadParams{
@@ -9,6 +10,7 @@ export const downloadPdfServices = {
     downloadPdf: async ({userId, documentId} : DownloadParams) =>{
        try{
         debugger;
+        console.log(documentId)
         const res = await axios.post(
             `http://localhost:3000/api/generate-pdf/${userId}`, 
             {}, 

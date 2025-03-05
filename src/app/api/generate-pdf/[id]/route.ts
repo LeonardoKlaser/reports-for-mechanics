@@ -1,14 +1,13 @@
-import DocumentTemplate from "@/components/DocumentTemplate";
+/* eslint-disable */
 import { generatePdf } from "@/lib/generatePdf";
 import RenderPdf from "@/lib/renderPdf";
+import { NextRequest, NextResponse } from "next/server";
 // import  RenderPdf  from "@/lib/renderPdf";
-import { stat } from "fs";
 
-export const POST = async (req: Request, context: { params: { id: string } }) => {
+export const POST = async (req: NextRequest, {params}: { params: Promise<{ id: string }> }) => {
     try {
         debugger;
-        const { params } = context; // Pega os parâmetros corretamente
-        const documentId = params?.id; // Aguarda params e pega o ID
+        const documentId = (await params).id; // Aguarda params e pega o ID
 
         if (!documentId) {
             return new Response("Faltando campos obrigatórios", { status: 400 });
@@ -16,7 +15,7 @@ export const POST = async (req: Request, context: { params: { id: string } }) =>
 
         const htmlContent = await RenderPdf();
 
-        const pdfBuffer = await generatePdf(htmlContent.document, "aaa", true, htmlContent.header);
+        const pdfBuffer = await generatePdf(htmlContent.document, "aaa", true);
 
         return new Response(pdfBuffer, {
             status: 200,
