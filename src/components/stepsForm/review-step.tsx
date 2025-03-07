@@ -1,8 +1,18 @@
 import { useFormContext } from "react-hook-form"
 import type { VehicleInspectionData } from "@/components/vehicle-inspection-form"
+import Image from "next/image"
+
+// Atualize a interface VehicleInspectionData para incluir detailFields
+interface ExtendedVehicleInspectionData extends VehicleInspectionData {
+  detailFields?: {
+    [key: string]: {
+      [key: string]: string | { [key: string]: string }
+    }
+  }
+}
 
 export default function ReviewStep() {
-  const { watch } = useFormContext<VehicleInspectionData>()
+  const { watch } = useFormContext<ExtendedVehicleInspectionData>()
   const formData = watch()
 
   const formatConditionStatus = (status: string) => {
@@ -17,6 +27,18 @@ export default function ReviewStep() {
         return status
     }
   }
+
+  const checkItems = [
+    { id: "chassi", label: "Chassi V2" },
+    { id: "motor", label: "Motor V2" },
+    { id: "cambio", label: "Câmbio V2" },
+    { id: "eta", label: "ETA´s V2" },
+    { id: "placas", label: "Placas V2" },
+    { id: "vidros", label: "Vidros V2" },
+    { id: "estrutura", label: "Estrutura Veicular V2" },
+    { id: "historico", label: "Histórico:Leilão/Sinistro" },
+    { id: "documentacao", label: "Documentação V2" },
+  ]
 
   return (
     <div className="space-y-6">
@@ -63,21 +85,65 @@ export default function ReviewStep() {
         </section>
 
         <section className="space-y-2">
+          <h3 className="text-lg font-medium">Imagens Carregadas</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {Object.entries(formData.images || {}).map(([partName, file]) => (
+              <div key={partName} className="text-sm">
+                <p className="font-medium mb-1">{partName}</p>
+                <div className="relative aspect-video">
+                  <Image
+                    src={URL.createObjectURL(file as File) || "/placeholder.svg"}
+                    alt={`Imagem de ${partName}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-md"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-2">
           <h3 className="text-lg font-medium">Lista de Verificação de Condição</h3>
-          <div className="space-y-3">
-            {Object.entries(formData.conditionChecks).map(([key, value]) => {
-              const label = key.charAt(0).toUpperCase() + key.slice(1)
-              const notes = formData.conditionNotes[key]
+          <div className="space-y-4">
+            {checkItems.map((item) => {
+              const status = formData.conditionChecks?.[item.id] || "na"
+              const details = formData.detailFields?.[item.id]
 
               return (
-                <div key={key} className="border rounded-md p-3">
-                  <div className="flex justify-between">
-                    <span className="font-medium">{label}:</span>
-                    <span className={value === "issue" ? "text-destructive font-medium" : ""}>
-                      {formatConditionStatus(value)}
+                <div key={item.id} className="border rounded-md p-3">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-medium">{item.label}:</span>
+                    <span className={status === "issue" ? "text-destructive font-medium" : ""}>
+                      {formatConditionStatus(status)}
                     </span>
                   </div>
-                  {notes && <div className="mt-1 text-sm text-muted-foreground">{notes}</div>}
+                  {details && (
+                    <div className="text-sm space-y-2">
+                      {Object.entries(details).map(([labelKey, labelData]) => (
+                        <div key={`${item.id}-${labelKey}`}>
+                          <p className="font-medium">
+                            {typeof labelData === "object"
+                              ? labelData.label || `Detalhe ${labelKey}`
+                              : `Detalhe ${labelKey}`}
+                            :
+                          </p>
+                          {typeof labelData === "string" ? (
+                            <p>{labelData}</p>
+                          ) : (
+                            <div className="pl-4">
+                              {Object.entries(labelData).map(([infoKey, infoValue]) => (
+                                <p key={`${item.id}-${labelKey}-${infoKey}`}>
+                                  <span className="font-medium">{infoKey}:</span> {infoValue as string}
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )
             })}

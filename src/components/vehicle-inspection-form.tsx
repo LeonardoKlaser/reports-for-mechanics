@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import GeneralInfoStep from "@/components/stepsForm/general-info-step"
 import AccessoriesStep from "@/components/stepsForm/accessorios-step"
+import ImageUploadStep from "@/components/stepsForm/image-upload-step"
 import ConditionCheckStep from "@/components/stepsForm/condition-check-step"
 import ReviewStep from "@/components/stepsForm/review-step"
 import StepIndicator from "@/components/step-indicator"
 import { FormProvider, useForm } from "react-hook-form"
 
-// Define a estrutura de dados do formulário
 export type VehicleInspectionData = {
   // Informações Gerais
   reportNumber: string
@@ -37,9 +37,15 @@ export type VehicleInspectionData = {
   conditionNotes: {
     [key: string]: string
   }
+
+  // campo para imagens
+  images: {
+    [key: string]: File | undefined
+  }
 }
 
 const initialData: VehicleInspectionData = {
+  // Informações Gerais
   reportNumber: "",
   inspectionDate: new Date().toISOString().split("T")[0],
   make: "",
@@ -78,6 +84,8 @@ const initialData: VehicleInspectionData = {
     lights: "",
     tires: "",
   },
+  
+  images: {},
 }
 
 export default function VehicleInspectionForm() {
@@ -95,6 +103,7 @@ export default function VehicleInspectionForm() {
       validationFields: ["reportNumber", "make", "model", "year"],
     },
     { name: "Acessórios", component: AccessoriesStep, validationFields: [] },
+    { name: "Upload de Imagens", component: ImageUploadStep, validationFields: [] },
     { name: "Verificação de Condição", component: ConditionCheckStep, validationFields: [] },
     { name: "Revisão", component: ReviewStep, validationFields: [] },
   ]
