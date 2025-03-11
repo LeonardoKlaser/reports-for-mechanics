@@ -4,6 +4,34 @@ import RenderPdf from "@/lib/renderPdf";
 import { NextRequest, NextResponse } from "next/server";
 // import  RenderPdf  from "@/lib/renderPdf";
 
+interface VehicleInspectionData {
+    reportNumber: string
+    inspectionDate: string
+    make: string
+    model: string
+    color: string
+    year: string
+    licensePlate: string
+    vin: string
+    odometer: string
+    accessories: string
+    conditionChecks: {
+      [key: string]: "ok" | "issue" | "na"
+    }
+    detailFields?: {
+      [key: string]: {
+        [key: string]: string | { [key: string]: string }
+      }
+    }
+    images: {
+      [key: string]: string // Assuming we'll receive image URLs
+    }
+  }
+  
+  interface RenderPdfProps {
+    formData: VehicleInspectionData
+  }
+
 export const POST = async (req: NextRequest, {params}: { params: Promise<{ id: string }> }) => {
     try {
         debugger;
@@ -13,7 +41,9 @@ export const POST = async (req: NextRequest, {params}: { params: Promise<{ id: s
             return new Response("Faltando campos obrigatórios", { status: 400 });
         }
 
-        const htmlContent = await RenderPdf();
+        const formData: RenderPdfProps = await req.json()
+
+        const htmlContent = await RenderPdf(formData);
 
         const pdfBuffer = await generatePdf(htmlContent.document, "aaa", true);
 

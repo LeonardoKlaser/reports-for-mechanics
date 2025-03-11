@@ -1,21 +1,21 @@
 /* eslint-disable */
 import  { AxiosError } from "axios"
 import { downloadPdfServices } from "@/app/services/downloadPdfService";
-interface DownloadParams{
-    userId: string,
-    documentId: string
-}
+import type { VehicleInspectionData } from "@/components/vehicle-inspection-form"
 
-interface ErrorResponse{
-    message?: string
+interface RenderPdfProps {
+    formData: VehicleInspectionData
 }
+  interface ErrorResponse{
+    message? : string
+  }
 
-export async function onDownload ({userId, documentId} : DownloadParams,
+export async function onDownload ({formData} : RenderPdfProps,
     toast: (args: { title: string; description: string; variant?: "destructive" }) => void
 )  {
     try{
         debugger;
-        const res = await downloadPdfServices.downloadPdf({userId: userId, documentId: documentId});
+        const res = await downloadPdfServices.downloadPdf({formData});
         if(res){
             toast({title: "PDF gerado com sucesso", description: "Iniciaindo download"});
 
@@ -23,7 +23,7 @@ export async function onDownload ({userId, documentId} : DownloadParams,
             const url = window.URL.createObjectURL(blob); // cria link de download temporario
             const link = document.createElement("a"); 
             link.href = url;
-            link.download = `document-${documentId}.pdf`;
+            link.download = `document.pdf`;
             document.body.appendChild(link);
             link.click();
             link.remove();

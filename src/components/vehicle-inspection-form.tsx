@@ -10,38 +10,38 @@ import ConditionCheckStep from "@/components/stepsForm/condition-check-step"
 import ReviewStep from "@/components/stepsForm/review-step"
 import StepIndicator from "@/components/step-indicator"
 import { FormProvider, useForm } from "react-hook-form"
+import { onDownload } from "@/actions/onDownload"
+import { useToast } from "@/hooks/use-toast"
 
+// Atualize a estrutura de dados do formulário
 export type VehicleInspectionData = {
-  // Informações Gerais
   reportNumber: string
   inspectionDate: string
   make: string
   model: string
   color: string
   year: string
-  yearFab: string
   licensePlate: string
   vin: string
   odometer: string
-  combustivel: string
-  unidade: string
-  cliente: string
-
-  // Acessórios
   accessories: string
-
-  // Verificações de Condição
   conditionChecks: {
     [key: string]: "ok" | "issue" | "na"
   }
   conditionNotes: {
     [key: string]: string
   }
-
-  // campo para imagens
   images: {
-    [key: string]: File | undefined
+    [key: string]: File
   }
+  detailFields?: {
+    [key: string]: {
+      [key: string]: string | { [key: string]: string }
+    }
+  }
+}
+interface RenderPdfProps {
+  formData: VehicleInspectionData
 }
 
 const initialData: VehicleInspectionData = {
@@ -51,14 +51,10 @@ const initialData: VehicleInspectionData = {
   make: "",
   model: "",
   color: "",
-  yearFab: "",
   year: "",
   licensePlate: "",
   vin: "",
   odometer: "",
-  combustivel:"",
-  unidade: "",
-  cliente: "",
   accessories: "",
   conditionChecks: {
     exterior: "na",
@@ -84,12 +80,13 @@ const initialData: VehicleInspectionData = {
     lights: "",
     tires: "",
   },
-  
+  // Inicialize o campo de imagens
   images: {},
 }
 
 export default function VehicleInspectionForm() {
   const [currentStep, setCurrentStep] = useState(0)
+  const {toast} = useToast();
 
   const methods = useForm<VehicleInspectionData>({
     defaultValues: initialData,
@@ -130,9 +127,8 @@ export default function VehicleInspectionForm() {
   }
 
   const onSubmit = (data: VehicleInspectionData) => {
-    // Isso se conectaria ao seu serviço de geração de PDF
-    console.log("Gerando PDF com os dados:", data)
-    alert("A geração do PDF aconteceria aqui com os dados coletados.")
+    onDownload({formData: data}, toast);
+    console.log("Gerando PDF com os dados:", data);
   }
 
   return (

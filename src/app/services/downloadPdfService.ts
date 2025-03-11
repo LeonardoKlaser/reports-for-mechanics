@@ -1,19 +1,18 @@
 /* eslint-disable */
 import axios from "axios";
+import type { VehicleInspectionData } from "@/components/vehicle-inspection-form"
 
-interface DownloadParams{
-    userId: string,
-    documentId: string
-}
+interface RenderPdfProps {
+    formData: VehicleInspectionData
+  }
 
 export const downloadPdfServices = {
-    downloadPdf: async ({userId, documentId} : DownloadParams) =>{
+    downloadPdf: async ({formData} : RenderPdfProps) =>{
        try{
         debugger;
-        console.log(documentId)
         const res = await axios.post(
-            `http://localhost:3000/api/generate-pdf/${userId}`, 
-            {}, 
+            `http://localhost:3000/api/generate-pdf/`, 
+            {formData}, 
             {responseType: "arraybuffer"} //manipular dados binários para o PDF
         );
 

@@ -28,8 +28,7 @@ export function NavMenu() {
             <Users className="w-5 h-5" />
             <span>Sobre Nós</span>
             </Link>
-            <Button onClick={() => {onDownload({userId: '12', documentId: "12"}, toast)}}>
-              Teste PDF
+            <Button >
             </Button>
             {data?.user && (
               <Button onClick={() => redirect("/dashboard")}>

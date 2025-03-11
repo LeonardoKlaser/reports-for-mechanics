@@ -1,23 +1,37 @@
-import DocumentTemplate from "@/components/DocumentTemplate";
-import HeaderTemplate from "@/components/headerTemplate";
-import React from "react";
+import DocumentTemplate from "@/components/DocumentTemplate"
 
+interface VehicleInspectionData {
+  reportNumber: string
+  inspectionDate: string
+  make: string
+  model: string
+  color: string
+  year: string
+  licensePlate: string
+  vin: string
+  odometer: string
+  accessories: string
+  conditionChecks: {
+    [key: string]: "ok" | "issue" | "na"
+  }
+  detailFields?: {
+    [key: string]: {
+      [key: string]: string | { [key: string]: string }
+    }
+  }
+  images: {
+    [key: string]: string // Assuming we'll receive image URLs
+  }
+}
 
-// interface DocumentData {
-//   title: string;
-//   content: string;
-// }
+interface RenderPdfProps {
+  formData: VehicleInspectionData
+}
 
-// interface UserData {
-//   name: string;
-//   email: string;
-// }
+export default async function RenderPdf({ formData }: RenderPdfProps) {
+  const { renderToString } = await import("react-dom/server");
+  const document = renderToString(<DocumentTemplate formData={formData} />)
 
-export default async function RenderPdf()  {
-    const { renderToString } = await import("react-dom/server");
-    const document = renderToString(<DocumentTemplate  documentData={{ title: "Meu Documento", content: "Esse é o conteúdo do documento." }} 
-    userData={{ name: "Leonardo Becker Klaser", email: "leobkklaser@gmail.com" }}  ></DocumentTemplate>)
+  return { document }
+}
 
-    const header = renderToString(<HeaderTemplate></HeaderTemplate>)
-    return {header: header, document: document}
-};
