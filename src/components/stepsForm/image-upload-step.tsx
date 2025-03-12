@@ -51,7 +51,7 @@ const imageParts = [
 ]
 
 export default function ImageUploadStep() {
-  const { register, setValue, watch } = useFormContext<VehicleInspectionData>()
+  const { setValue } = useFormContext<VehicleInspectionData>()
   const [previewImages, setPreviewImages] = useState<{ [key: string]: string }>({})
 
   const handleImageUpload = (partName: string, event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +75,7 @@ export default function ImageUploadStep() {
     setValue(`images.${partName}`, undefined)
   }
 
-  const images = watch("images")
+  //const images = watch("images")
 
   return (
     <div className="space-y-6">

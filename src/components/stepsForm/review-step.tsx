@@ -258,7 +258,7 @@ export default function ReviewStep() {
       <div className="bg-muted p-4 rounded-md mt-6">
         <p className="text-sm text-muted-foreground">
           Por favor, revise todas as informações para garantir a precisão antes de gerar o relatório em PDF. Você pode
-          editar as informações clicando no botão "Editar" em cada seção.
+          editar as informações clicando no botão Editar em cada seção.
         </p>
       </div>
     </div>

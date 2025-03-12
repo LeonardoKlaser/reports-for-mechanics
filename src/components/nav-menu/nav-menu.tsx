@@ -7,12 +7,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { redirect } from "next/navigation";
 import logoutAction from "@/app/(auth)/(logout)/logoutAction";
 import { useSession } from "next-auth/react"
-import { onDownload } from "@/actions/onDownload"
-import { useToast } from "@/hooks/use-toast"
 
 export function NavMenu() {
   const {data} = useSession();
-  const {toast} = useToast();
   return (
     <nav className="flex items-center justify-between p-4 bg-navMenu">
       <div className="flex items-center space-x-5">
@@ -28,8 +25,6 @@ export function NavMenu() {
             <Users className="w-5 h-5" />
             <span>Sobre Nós</span>
             </Link>
-            <Button >
-            </Button>
             {data?.user && (
               <Button onClick={() => redirect("/dashboard")}>
                 Dashboard

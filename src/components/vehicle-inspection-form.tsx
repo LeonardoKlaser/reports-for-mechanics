@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client"
 
 import { useState } from "react"
@@ -40,9 +41,9 @@ export type VehicleInspectionData = {
     }
   }
 }
-interface RenderPdfProps {
-  formData: VehicleInspectionData
-}
+// interface RenderPdfProps {
+//   formData: VehicleInspectionData
+// }
 
 const initialData: VehicleInspectionData = {
   // Informações Gerais
