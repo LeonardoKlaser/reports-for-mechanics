@@ -22,9 +22,13 @@ export type VehicleInspectionData = {
   model: string
   color: string
   year: string
+  yearFab: string
   licensePlate: string
   vin: string
   odometer: string
+  combustivel: string
+  unidade: string
+  cliente: string
   accessories: string
   conditionChecks: {
     [key: string]: "ok" | "issue" | "na"
@@ -52,10 +56,14 @@ const initialData: VehicleInspectionData = {
   make: "",
   model: "",
   color: "",
+  yearFab: "",
   year: "",
   licensePlate: "",
   vin: "",
   odometer: "",
+  combustivel:"",
+  unidade: "",
+  cliente: "",
   accessories: "",
   conditionChecks: {
     exterior: "na",

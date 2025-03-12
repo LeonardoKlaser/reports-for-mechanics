@@ -72,7 +72,7 @@ export default function ImageUploadStep() {
       delete newPreviews[partName]
       return newPreviews
     })
-    setValue(`images.${partName}`, undefined)
+    setValue(`images.${partName}`, null as unknown as File )
   }
 
   //const images = watch("images")
