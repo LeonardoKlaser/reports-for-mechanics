@@ -1,35 +1,13 @@
 /* eslint-disable */
 import type React from "react"
 
-interface VehicleInspectionData {
-  reportNumber: string
-  inspectionDate: string
-  make: string
-  model: string
-  color: string
-  year: string
-  licensePlate: string
-  vin: string
-  odometer: string
-  accessories: string
-  conditionChecks: {
-    [key: string]: "ok" | "issue" | "na"
-  }
-  detailFields?: {
-    [key: string]: {
-      [key: string]: string | { [key: string]: string }
-    }
-  }
-  images: {
-    [key: string]: string // Alterado para string, assumindo que receberemos URLs de imagem
-  }
-}
+import type { VehicleInspectionData } from "@/components/vehicle-inspection-form"
 
-interface DocumentTemplateProps {
-  formData: VehicleInspectionData
-}
+  interface RenderPdfProps {
+    formData: VehicleInspectionData
+  }
 
-const DocumentTemplate: React.FC<DocumentTemplateProps> = ({ formData }) => {
+const DocumentTemplate: React.FC<RenderPdfProps> = ({formData}) => {
   const labels = [
     "Frente",
     "Traseira",
@@ -232,7 +210,7 @@ const DocumentTemplate: React.FC<DocumentTemplateProps> = ({ formData }) => {
             ))}
 
           {/* Imagens */}
-          <div className="w-[calc(100vw-60px)] mx-auto pt-[15px]">
+          {/* <div className="w-[calc(100vw-60px)] mx-auto pt-[15px]">
             <div className="grid grid-cols-3 gap-4 break-inside-avoid">
               {labels.map((label, index) => (
                 <div key={index} className="flex flex-col items-center break-inside-avoid-page">
@@ -251,7 +229,7 @@ const DocumentTemplate: React.FC<DocumentTemplateProps> = ({ formData }) => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </body>
     </html>

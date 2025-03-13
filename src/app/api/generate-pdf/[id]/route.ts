@@ -3,31 +3,8 @@ import { generatePdf } from "@/lib/generatePdf";
 import RenderPdf from "@/lib/renderPdf";
 import { NextRequest, NextResponse } from "next/server";
 // import  RenderPdf  from "@/lib/renderPdf";
+import type { VehicleInspectionData } from "@/components/vehicle-inspection-form"
 
-interface VehicleInspectionData {
-    reportNumber: string
-    inspectionDate: string
-    make: string
-    model: string
-    color: string
-    year: string
-    licensePlate: string
-    vin: string
-    odometer: string
-    accessories: string
-    conditionChecks: {
-      [key: string]: "ok" | "issue" | "na"
-    }
-    detailFields?: {
-      [key: string]: {
-        [key: string]: string | { [key: string]: string }
-      }
-    }
-    images: {
-      [key: string]: string // Assuming we'll receive image URLs
-    }
-  }
-  
   interface RenderPdfProps {
     formData: VehicleInspectionData
   }
