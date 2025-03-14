@@ -31,32 +31,32 @@ export default function ConditionCheckStep() {
   const dataItems: DataItem[] = [
     {
       id: "chassi",
-      labels: { 1: { label: "Gravação do Chassi: ", infos: { 1: "Numeração Identificadora", 2: "Chapa Suporte: " } } },
+      labels: { 0: { label: "Gravação do Chassi: ", infos: { 0: "Numeração Identificadora", 1: "Chapa Suporte: " } } },
     },
-    { id: "motor", labels: { 1: { label: "Numeração do Motor" } } },
-    { id: "cambio", labels: { 1: { label: "Numeração do Câmbio" } } },
+    { id: "motor", labels: { 0: { label: "Numeração do Motor" } } },
+    { id: "cambio", labels: { 0: { label: "Numeração do Câmbio" } } },
     {
       id: "eta",
       labels: {
-        1: {
+        0: {
           label: "Etiquetas de Identificação",
-          infos: { 1: "ETA Motor:", 2: "ETA Batente da Porta:", 3: "ETA Assoalho:", 4: "Plaqueta Ano Fabricação:" },
+          infos: { 0: "ETA Motor:", 1: "ETA Batente da Porta:", 2: "ETA Assoalho:", 3: "Plaqueta Ano Fabricação:" },
         },
       },
     },
-    { id: "placas", labels: { 1: { label: "Placa Dianteira" }, 2: { label: "Placa Traseira" } } },
+    { id: "placas", labels: { 0: { label: "Placa Dianteira" }, 1: { label: "Placa Traseira" } } },
     {
       id: "vidros",
       labels: {
-        1: {
+        0: {
           label: "Condição do Chassi nos Vidros",
           infos: {
-            1: "Parabrisa:",
-            2: "Porta Diante. Esq.:",
-            3: "Porta Tras. Esq./Lat Tras. Dir.:",
-            4: "Vigia Traseiro:",
-            5: "Porta Tras.Dir/Lat Tras.Dir.:",
-            6: "Porta Diante.Dir.:",
+            0: "Parabrisa:",
+            1: "Porta Diante. Esq.:",
+            2: "Porta Tras. Esq./Lat Tras. Dir.:",
+            3: "Vigia Traseiro:",
+            4: "Porta Tras.Dir/Lat Tras.Dir.:",
+            5: "Porta Diante.Dir.:",
           },
         },
       },
@@ -64,60 +64,60 @@ export default function ConditionCheckStep() {
     {
       id: "estrutura",
       labels: {
-        1: {
+        0: {
           label: "Estrutura Veicular - Dianteira",
           infos: {
-            1: "Longarina Dianteira Esquerda",
-            2: "Longarina Dianteira Direita",
-            3: "Torre do Amortecedor Dianteira Esquerda",
-            4: "Torre do Amortecedor Dianteira Direita",
-            5: "Painel Corta Fogo",
-            6: "Painel Dianteiro Inferior/Superior ou Alma do Para-choque",
-            7: "Crashbox (Parafusado)",
-            8: "Crashbox/Quadro do Radiador (Soldado)",
-            9: "Paralama Interno Dianteiro Direito",
-            10: "Paralama Interno Dianteiro Esquerdo",
+            0: "Longarina Dianteira Esquerda",
+            1: "Longarina Dianteira Direita",
+            2: "Torre do Amortecedor Dianteira Esquerda",
+            3: "Torre do Amortecedor Dianteira Direita",
+            4: "Painel Corta Fogo",
+            5: "Painel Dianteiro Inferior/Superior ou Alma do Para-choque",
+            6: "Crashbox (Parafusado)",
+            7: "Crashbox/Quadro do Radiador (Soldado)",
+            8: "Paralama Interno Dianteiro Direito",
+            9: "Paralama Interno Dianteiro Esquerdo",
+          },
+        },
+        1: {
+          label: "Estrutura Veicular - Traseira",
+          infos: {
+            0: "Longarina Traseira Esquerda",
+            1: "Longarina Traseira Direita",
+            2: "Caixa de Roda Traseira Esquerda",
+            3: "Caixa de Roda Traseira Direita",
+            4: "Painel Traseiro",
           },
         },
         2: {
-          label: "Estrutura Veicular - Traseira",
+          label: "Estrutura Veicular - Laterais",
           infos: {
-            1: "Longarina Traseira Esquerda",
-            2: "Longarina Traseira Direita",
-            3: "Caixa de Roda Traseira Esquerda",
-            4: "Caixa de Roda Traseira Direita",
-            5: "Painel Traseiro",
+            0: "Folha Lateral Traseira Direita",
+            1: "Folha Lateral Traseira Esquerda",
+            2: "Caixa de Ar Direita",
+            3: "Caixa de Ar Esquerda",
+            4: "Coluna Esquerda (A)",
+            5: "Coluna Esquerda (B)",
+            6: "Coluna Esquerda (C)",
+            7: "Coluna Direita (A)",
+            8: "Coluna Direita (B)",
+            9: "Coluna Direita (C)",
           },
         },
         3: {
-          label: "Estrutura Veicular - Laterais",
-          infos: {
-            1: "Folha Lateral Traseira Direita",
-            2: "Folha Lateral Traseira Esquerda",
-            3: "Caixa de Ar Direita",
-            4: "Caixa de Ar Esquerda",
-            5: "Coluna Esquerda (A)",
-            6: "Coluna Esquerda (B)",
-            7: "Coluna Esquerda (C)",
-            8: "Coluna Direita (A)",
-            9: "Coluna Direita (B)",
-            10: "Coluna Direita (C)",
-          },
-        },
-        4: {
           label: "Estrutura Veicular - Outros",
           infos: {
-            1: "Assoalho do Monobloco (Habitáculo, Área Visível)",
-            2: "Assoalho do Portamalas / Caçamba",
-            3: "Caixa de Estepe (Divisão Assoalho do Portamalas)",
-            4: "Estrutura do Teto",
-            5: "Folha do Teto",
+            0: "Assoalho do Monobloco (Habitáculo, Área Visível)",
+            1: "Assoalho do Portamalas / Caçamba",
+            2: "Caixa de Estepe (Divisão Assoalho do Portamalas)",
+            3: "Estrutura do Teto",
+            4: "Folha do Teto",
           },
         },
       },
     },
-    { id: "historico", labels: { 1: { label: "Histórico Veicular:" } } },
-    { id: "documentacao", labels: { 1: { label: "CRLV/Pesquisa Novo" }, 2: { label: "Veículo Novo" } } },
+    { id: "historico", labels: { 0: { label: "Histórico Veicular:" } } },
+    { id: "documentacao", labels: { 0: { label: "CRLV/Pesquisa Novo" }, 1: { label: "Veículo Novo" } } },
   ]
 
   // Helper function to find dataItem by id
@@ -174,7 +174,7 @@ export default function ConditionCheckStep() {
                           </Label>
                           <Input
                             id={`${checkItem.id}-label-${labelKey}-info-${infoKey}`}
-                            {...register(`detailFields.${checkItem.id}.${labelKey}.${infoKey}` as any)}
+                            {...register(`detailFields.${checkItem.id}.${infoKey}.${infoKey}` as any)}
                             className="mt-1"
                           />
                         </div>
