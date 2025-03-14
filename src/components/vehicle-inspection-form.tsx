@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast"
 
 // Atualize a estrutura de dados do formulário
 export type VehicleInspectionData = {
+  
   reportNumber: string
   inspectionDate: string
   make: string
@@ -65,18 +66,7 @@ const initialData: VehicleInspectionData = {
   unidade: "",
   cliente: "",
   accessories: "",
-  conditionChecks: {
-    exterior: "na",
-    chassis: "na",
-    engine: "na",
-    transmission: "na",
-    brakes: "na",
-    suspension: "na",
-    electrical: "na",
-    interior: "na",
-    lights: "na",
-    tires: "na",
-  },
+  conditionChecks: {},
   conditionNotes: {
     exterior: "",
     chassis: "",

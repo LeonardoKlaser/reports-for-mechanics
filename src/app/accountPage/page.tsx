@@ -101,8 +101,7 @@ export default function AccountPage() {
               <CardDescription>Gerencie seus metodos de pagamento e histórico</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>
-              Suas informações de faturamento e histórico de pagamentos serão exibidos aqui.</p>
+              <p>Suas informações de faturamento e histórico de pagamentos serão exibidos aqui.</p>
             </CardContent>
             <CardFooter>
               <Button variant="outline">Ver histórico de pagamentos</Button>

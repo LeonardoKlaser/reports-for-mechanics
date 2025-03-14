@@ -21,7 +21,7 @@ export default function Home() {
               </div>
               <div className="space-x-4">
                 <Button asChild>
-                  <Link href="/formulario">Experimente uma demonstração</Link>
+                  <Link href="/formularioV2">Experimente uma demonstração</Link>
                 </Button>
                 <Button variant="outline" asChild>
                   <Link href="#how-it-works">Saiba mais</Link>
