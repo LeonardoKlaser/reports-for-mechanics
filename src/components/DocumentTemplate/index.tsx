@@ -238,7 +238,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                     </td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] ">DENTRO DOS PADRÕES HABITUAIS DO FABRICANTE</td>
+                    <td className="pl-[40px] ">NÃO POSSUI CADASTRO NA BIN</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] ">NÃO POSSUI CADASTRO NA BIN</td>
