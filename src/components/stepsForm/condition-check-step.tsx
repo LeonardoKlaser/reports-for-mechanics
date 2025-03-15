@@ -174,7 +174,7 @@ export default function ConditionCheckStep() {
                           </Label>
                           <Input
                             id={`${checkItem.id}-label-${labelKey}-info-${infoKey}`}
-                            {...register(`detailFields.${checkItem.id}.${infoKey}.${infoKey}` as any)}
+                            {...register(`detailFields.${checkItem.id}.${labelKey}.${infoKey}` as any)}
                             className="mt-1"
                           />
                         </div>

@@ -42,7 +42,7 @@ export type VehicleInspectionData = {
   }
   detailFields?: {
     [key: string]: {
-      [key: string]: { [key: string]: string }
+      [key: string]: string |  { [key: string]: string }
     }
   }
 }
