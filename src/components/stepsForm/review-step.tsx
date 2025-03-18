@@ -13,9 +13,7 @@ import { Label } from "@/components/ui/label"
 
 interface ExtendedVehicleInspectionData extends VehicleInspectionData {
   detailFields?: {
-    [key: string]: {
-      [key: string]: string | { [key: string]: string }
-    }
+    [key: string]: string[][] 
   }
 }
 
@@ -207,7 +205,7 @@ export default function ReviewStep() {
                         <div key={`${item.id}-${labelKey}`}>
                           <p className="font-medium">
                             {typeof labelData === "object"
-                              ? labelData.label || `Detalhe ${labelKey}`
+                              ? labelData || `Detalhe ${labelKey}`
                               : `Detalhe ${labelKey}`}
                             :
                           </p>
@@ -215,7 +213,7 @@ export default function ReviewStep() {
                             typeof labelData === "string" ? (
                               <Input
                                 value={labelData}
-                                onChange={(e) => setValue(`detailFields.${item.id}.${labelKey}`, e.target.value)}
+                                onChange={(e) => setValue(`detailFields.${item.id}.${labelKey}` as keyof ExtendedVehicleInspectionData, e.target.value)}
                               />
                             ) : (
                               <div className="pl-4 space-y-2">
@@ -226,7 +224,7 @@ export default function ReviewStep() {
                                       id={`${item.id}-${labelKey}-${infoKey}`}
                                       value={infoValue as string}
                                       onChange={(e) =>
-                                        setValue(`detailFields.${item.id}.${labelKey}.${infoKey}`, e.target.value)
+                                        setValue(`detailFields.${item.id}.${labelKey}.${infoKey}` as keyof ExtendedVehicleInspectionData, e.target.value)
                                       }
                                     />
                                   </div>
