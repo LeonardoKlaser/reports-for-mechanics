@@ -16,6 +16,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
     "Longarina traseira/direita", "Junção Assoalho/Painel tras", "Assoalho Int. Portamalas", "Trilho Colunas Tras, Dir", "Caixa de Ar dir", "Painel Geral", "Acabamento P.E", "Multimidia/ Painel central",
     "Acabamento P.D", "Banco Traseiro", "Pneus/Rodas Diant esq.", "Pneus/Rodas Traseiro Esq.", "Pneus/Rodas Traseiro Dir", "Pneus/Rodas Diant. Direito", "Pneu Estepe", "Extra Impressa 1"
   ];
+  const acessories = formData.accessories.split(",");
   return (
     <html>
       <head>
@@ -172,34 +173,9 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                       • ACESSÓRIOS E EXTRAS
                     </td>
                   </tr>
-                  {[
-                    { label: "Direção Hidráulica/Elétrica" },
-                    { label: "Retrovisores Elétricos" },
-                    { label: "Alarme" },
-                    { label: "Ar Quente" },
-                    { label: "Banco Elétr. Motorista" },
-                    { label: "Estepe" },
-                    { label: "Macaco" },
-                    { label: "Rádio" },
-                    { label: "Teto Solar" },
-                    { label: "Vidros Elétricos" },
-                    { label: "Limp./Lav. Vidro Tras." },
-                    { label: "Antena Elétrica" },
-                    { label: "Banco Bi-Partido" },
-                    { label: "Banco Elétr. Passageiro" },
-                    { label: "Chave de Roda" },
-                    { label: "Rodas de Liga Leve" },
-                    { label: "Ar Condicionado" },
-                    { label: "Travas Elétricas" },
-                    { label: "Térmico Traseiro" },
-                    { label: "Banco de Couro" },
-                    { label: "Comp. de Bordo" },
-                    { label: "Farol de Milha" },
-                    { label: "Tapetes" },
-                    { label: "Triângulo" }
-                  ].map((item, index) => (
+                  {acessories.map((item, index) => (
                     <tr key={index} className="border-b border-gray-300">
-                      <td className="pl-[15px] w-1/2 text-left">{item.label}</td>
+                      <td className="pl-[15px] w-1/2 text-left">{item}</td>
                     </tr>
                   ))}
                 </tbody>
