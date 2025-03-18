@@ -165,7 +165,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               ACESSÓRIOS E COMPLEMENTOS
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr>
                     <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] leading-tight text-left">
@@ -215,20 +215,20 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               CHASSI V2
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr>
-                    <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300">
+                    <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300"colSpan={2}>
                       NO. CHASSI NA BIN
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300">
+                    <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300"colSpan={2}>
                       NO. CHASSI NO VEÍCULO:
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300">
+                    <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300"colSpan={2}>
                       NO. CHASSI NO VEÍCULO:
                     </td>
                   </tr>
@@ -238,10 +238,12 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                     </td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] ">NÃO POSSUI CADASTRO NA BIN</td>
+                    <td className="pl-[40px] ">NUMERAÇÃO IDENTIFICADORA:</td>
+                    <td className="pl-[15px] ">{formData?.detailFields?.chassi[0][0]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] ">NÃO POSSUI CADASTRO NA BIN</td>
+                    <td className="pl-[40px] ">CHAPA SUPORTE:</td>
+                    <td className="pl-[15px] ">{formData?.detailFields?.chassi[0][1]}</td>
                   </tr>
                 </tbody>
               </table>
@@ -254,7 +256,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               MOTOR V2 .
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr>
                     <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300">
@@ -277,11 +279,11 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                     </td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] ">DENTRO DOS PADRÕES HABITUAIS DO FABRICANTE</td>
+                    <td className="pl-[40px] ">{formData?.detailFields?.motor[0]}</td>
                   </tr>
-                  <tr className="border-b border-gray-300">
+                  {/* <tr className="border-b border-gray-300">
                     <td className="pl-[40px]  ">É A MESMA QUE CONSTA NA BIN OU CRLV</td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
@@ -293,7 +295,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               CÂMBIO V2
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr>
                     <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300">
@@ -311,11 +313,11 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                     </td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] ">DENTRO DOS PADRÕES HABITUAIS DO FABRICANTE</td>
+                    <td className="pl-[40px] ">{formData?.detailFields?.cambio[0]}</td>
                   </tr>
-                  <tr className="border-b border-gray-300">
+                  {/* <tr className="border-b border-gray-300">
                     <td className="pl-[40px] ">NÃO POSSUI CADASTRO NA BIN</td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
@@ -327,7 +329,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               ETA´S V2
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr>
                     <td className="pl-[25px] py-1 text-left font-bold">
@@ -336,19 +338,19 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] ">ETA MOTOR:</td>
-                    <td className="pl-[15px] ">ETA DENTRO DOS PADRÕES/NUMERAÇÃO COINCIDE COM O CHASSI</td>
+                    <td className="pl-[15px] ">{formData?.detailFields?.eta[0][0]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] ">ETA BATENTE DA PORTA:</td>
-                    <td className="pl-[15px] ">ETA DENTRO DOS PADRÕES/NUMERAÇÃO COINCIDE COM O CHASSI</td>
+                    <td className="pl-[15px] ">{formData?.detailFields?.eta[0][1]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] ">ETA ASSOALHO:</td>
-                    <td className="pl-[15px] ">NÃO OBRIGATÓRIO</td>
+                    <td className="pl-[15px] ">{formData?.detailFields?.eta[0][2]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] ">PLAQUETA ANO FABRICAÇÃO:</td>
-                    <td className="pl-[15px] ">PLAQUETA OK (NACIONAIS E IMPORT. APÓS 1999)</td>
+                    <td className="pl-[15px] ">{formData?.detailFields?.eta[0][3]}</td>
                   </tr>
                 </tbody>
               </table>
@@ -361,7 +363,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               PLACAS V2
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr>
                     <td className="pl-[25px] py-1 text-left font-bold">
@@ -369,7 +371,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                     </td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px]  ">PLACA DENTRO DOS PADRÕES</td>
+                    <td className="pl-[40px]  ">{formData?.detailFields?.placas[0]}</td>
                   </tr>
                   <tr >
                     <td className="pl-[25px] py-1 text-left font-bold">
@@ -377,7 +379,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                     </td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] ">PLACA DENTRO DOS PADRÕES</td>
+                    <td className="pl-[40px] ">{formData?.detailFields?.placas[1]}</td>
                   </tr>
                 </tbody>
               </table>
@@ -391,31 +393,31 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
             <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight mb-[5px]">
               VIDROS V2
             </div>
-            <table className="w-full mt-[1px] text-xs">
+            <table className="w-full mt-[1px] text-[9px]">
               <tbody>
                 <tr className="border-b border-gray-300">
                   <td className="pl-[40px] ">PARABRISA :</td>
-                  <td className="pl-[15px] ">GRAVAÇÃO NÃO ORIGINAL / COINCIDE COM O CHASSI</td>
+                  <td className="pl-[15px] ">{formData?.detailFields?.vidros[0][0]}</td>
                 </tr>
                 <tr className="border-b border-gray-300">
                   <td className="pl-[40px]">PORTA DIANTE. ESQ. :</td>
-                  <td className="pl-[15px]">GRAVAÇÃO NÃO ORIGINAL / COINCIDE COM O CHASSI</td>
+                  <td className="pl-[15px]">{formData?.detailFields?.vidros[0][1]}</td>
                 </tr>
                 <tr className="border-b border-gray-300">
                   <td className="pl-[40px]">PORTA TRAS. ESQ / LAT TRAS. ESQ. :</td>
-                  <td className="pl-[15px]">GRAVAÇÃO NÃO ORIGINAL / COINCIDE COM O CHASSI</td>
+                  <td className="pl-[15px]">{formData?.detailFields?.vidros[0][2]}</td>
                 </tr>
                 <tr className="border-b border-gray-300">
                   <td className="pl-[40px]">VIGIA TRASEIRO. :</td>
-                  <td className="pl-[15px]">GRAVAÇÃO NÃO ORIGINAL / COINCIDE COM O CHASSI</td>
+                  <td className="pl-[15px]">{formData?.detailFields?.vidros[0][3]}</td>
                 </tr>
                 <tr className="border-b border-gray-300">
                   <td className="pl-[40px]">PORTA TRAS. DIR / LAT TRAS. DIR. : PORTA DIANTE. DIR. :</td>
-                  <td className="pl-[15px]">GRAVAÇÃO NÃO ORIGINAL / COINCIDE COM O CHASSI</td>
+                  <td className="pl-[15px]">{formData?.detailFields?.vidros[0][4]}</td>
                 </tr>
                 <tr className="border-b border-gray-300">
                   <td className="pl-[40px]">PORTA DIANTE. DIR. :</td>
-                  <td className="pl-[15px]">GRAVAÇÃO NÃO ORIGINAL / COINCIDE COM O CHASSI</td>
+                  <td className="pl-[15px]">{formData?.detailFields?.vidros[0][5]}</td>
                 </tr>
               </tbody>
             </table>
@@ -430,47 +432,47 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               <p className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] leading-tight text-left">
                 • ESTRUTURA VEICULAR - DIANTEIRA
               </p>
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">LONGARINA DIANTEI. ESQ. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][0]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">LONGARINA DIANTEI. DIR :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][1]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">TORRE DO AMORTECEDOR DIANTEI. ESQ. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][2]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">TORRE DO AMORTECEDOR DIANTEI. DIR. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][3]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">PAINEL CORTA FOGO . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][4]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">PAINEL DIANT. INF./SUP. OU ALMA DO PARACHOQUE:</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][5]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">CRASHBOX (PARAFUSADO) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][6]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">CRASHBOX/QUADRO DO RADIADOR (SOLDADO) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][7]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">PARALAMA INT. DIANTEI. DIR. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][8]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">PARALAMA INT. DIANTEI. ESQ. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[0][9]}</td>
                   </tr>
                 </tbody>
               </table>
@@ -479,39 +481,39 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               <p className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] leading-tight text-left">
                 • ESTRUTURA VEICULAR - TRASEIRA
               </p>
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">LONGARINA TRASEI. ESQ. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[1][0]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">LONGARINA TRASEI. DIR. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[1][1]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">CAIXA DE RODA TRASEI. ESQ. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[1][2]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">CAIXA DE RODA TRASEI. DIR. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[1][3]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">PORTA TRAS. DIR / LAT TRAS. DIR. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[1][4]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">PAINEL TRASEIRO . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[1][5]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">CONDIÇÕES DA CAÇAMBA (COMPART. DE CARGA) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[1][6]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">PAINEL TRAS. DA CABINE (SEPARAÇÃO CAÇAMBA):</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[1][7]}</td>
                   </tr>
                 </tbody>
               </table>
@@ -520,47 +522,47 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               <p className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] leading-tight text-left">
                 • ESTRUTURA VEICULAR - LATERAIS
               </p>
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">FOLHA LAT. TRASEI. DIR. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][0]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">FOLHA LAT. TRASEI. ESQ. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][1]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">CAIXA DE AR DIREITA . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][2]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">CAIXA DE AR ESQUERDA . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][3]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">COLUNA ESQ. (A) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][4]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">COLUNA ESQ. (B) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][5]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">COLUNA ESQ. (C) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][6]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">COLUNA DIR. (A) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][7]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">COLUNA DIR. (B) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][8]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">COLUNA DIR. (C) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[2][9]}</td>
                   </tr>
                 </tbody>
               </table>
@@ -569,47 +571,31 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               <p className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] leading-tight text-left">
                 • ESTRUTURA VEICULAR - OUTROS
               </p>
-              <table className="w-full text-xs">
+              <table className="w-full text-[9px]">
                 <tbody>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">FOLHA LAT. TRASEI. DIR. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[40px] w-[50%]">ASSOALHO DO MONOBLOCO (HABITÁCULO, ÁREA VISÍVEL) . :</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[3][0]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">FOLHA LAT. TRASEI. ESQ. :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[40px] w-[50%]">ASSOALHO DO PORTAMALAS / CAÇAMBA . :</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[3][1]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">CAIXA DE AR DIREITA . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[40px] w-[50%]">CAIXA DE ESTEPE(DIVISÃO ASSOALHO DO PORTAMALAS):</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[3][2]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">CAIXA DE AR ESQUERDA . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[40px] w-[50%]">ALONGAMENTO DE CHASSI (PESADOS) . :</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[3][3]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">COLUNA ESQ. (A) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[40px] w-[50%]">ESTRUTURA DO TETO . :</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[3][4]}</td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">COLUNA ESQ. (B) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">COLUNA ESQ. (C) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">COLUNA DIR. (A) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">COLUNA DIR. (B) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] w-[50%]">COLUNA DIR. (C) . :</td>
-                    <td className="pl-[15px] w-[50%]">SEM AVARIAS APARENTES</td>
+                    <td className="pl-[40px] w-[50%]">FOLHA DO TETO . :</td>
+                    <td className="pl-[15px] w-[50%]">{formData?.detailFields?.estrutura[3][5]}</td>
                   </tr>
                 </tbody>
               </table>
@@ -622,15 +608,15 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
             <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
               HISTÓRICO: LEILÃO/SINISTRO/R/F
             </div>
-            <table className="w-full mt-[1px]">
+            <table className="w-full mt-[1px] text-[9px]">
               <tbody>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] text-left" >
+                  <td className="text-gray-700 font-bold pl-[15px] pt-[8px] pb-[5px] text-left" >
                     • HISTÓRICO VEICULAR
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-left text-xs font-normal pl-[40px] w-1/2  border-b border-gray-300">
+                  <td className="text-left font-normal pl-[40px] w-1/2  border-b border-gray-300">
                     NENHUM REGISTRO ENCONTRADO
                   </td>
                 </tr>
@@ -643,25 +629,25 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
             <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
               DOCUMENTAÇÃO V2
             </div>
-            <table className="w-full mt-[1px]">
+            <table className="w-full mt-[1px] text-[9px]">
               <tbody>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] text-left" >
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px] text-left" >
                     • CRLV/PESQUISA NOVO
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-left text-xs font-normal pl-[40px] w-1/2  border-b border-gray-300">
+                  <td className="text-left  font-normal pl-[40px] w-1/2  border-b border-gray-300">
                     NENHUM REGISTRO ENCONTRADO
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] text-left" >
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px] text-left" >
                     • VEÍCULO NOVO
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-left text-xs font-normal pl-[40px] w-1/2 border-b border-gray-300">
+                  <td className="text-left font-normal pl-[40px] w-1/2 border-b border-gray-300">
                     NENHUM REGISTRO ENCONTRADO
                   </td>
                 </tr>
@@ -674,10 +660,10 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
             <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
               OBSERVAÇÃO
             </div>
-            <table className="w-full mt-[1px]">
+            <table className="w-full mt-[1px] text-[9px]">
               <tbody>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] text-left" >
+                  <td className="text-gray-700 font-bold pl-[15px] pt-[8px] pb-[5px] text-left" >
                     NADA CONSTA
                   </td>
                 </tr>
@@ -690,66 +676,66 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
             <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
               OBSERVAÇÕES GERAIS
             </div>
-            <table className="w-full mt-[1px]">
+            <table className="w-full mt-[1px] text-[9px]">
               <tbody>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - A PRESENTE VISTORIA POSSUI CARÁTER INFORMATIVO DE ANÁLISE PARTICULAR DO VEÍCULO VISTORIADO, NÃO SUBSTITUINDO A
                     PERÍCIA OFICIAL DO INSTITUTO DE CRIMINALÍSTICA OU QUALQUER LAUDO OFICIAL DE ÓRGÃOS COMPETENTES. OS ÓRGÃOS OFICIAIS
                     POSSUEM FERRAMENTAS PRÓPRIAS DE ANÁLISE, NÃO DISPONÍVEIS PARA EMPRESAS DE VISTORIA;
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - A UNIDADE SUPER VISÃO PRESTADORA DE SERVIÇO ABAIXO DESCRITA NÃO SE RESPONSABILIZA POR QUAISQUER MODIFICAÇÕES
                     POSTERIORES À REALIZAÇÃO DA VISTORIA. ESTE DOCUMENTO POSSUI SUA VALIDADE NO EXATO MOMENTO DA VISTORIA;
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - OS ITENS ANALISADOS RESPEITAM O ESCOPO DO RESPECTIVO SERVIÇO CONTRATADO, QUE SÃO APENAS OS ITENS INDICADOS NO
                     PRESENTE DOCUMENTO, DENTRO DOS CRITÉRIOS ESTABELECIDOS EM CADA UM DELES, NÃO ABRANGENDO NENHUM ITEM QUE NÃO ESTEJA
                     PRESENTE NESTA VISTORIA;
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - O STATUS/RESULTADO FINAL SEGUE O CRITÉRIO DE AVALIAÇÃO DESENVOLVIDO PELA SUPER VISÃO PERÍCIAS E VISTORIAS LTDA,
                     PODENDO ESTE SER ALTERADO SEM PRÉVIA COMUNICAÇÃO (ÚLTIMA ATUALIZAÇÃO 18/11/2023);
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - OS ITENS ESTRUTURAIS ANALISADOS CONTEMPLAM AS REGIÕES VISÍVEIS, PASSÍVEIS DE SEREM ANALISADAS SEM DESMONTAGEM DE
                     PEÇAS;
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - A SUPER VISÃO DISPONIBILIZA NA ÍNTEGRA OS DADOS FORNECIDOS PELAS EMPRESAS DE PESQUISA, NÃO SE RESPONSABILIZANDO POR
                     INFORMAÇÕES VINDAS DESTES FORNECEDORES POR SE TRATAREM DE BASES DE TERCEIROS;
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - CRITÉRIO DE AVALIAÇÃO DAS SEGURADORAS: AS COMPANHIAS DE SEGURO POSSUEM SEUS PRÓPRIOS MÉTODOS E CRITÉRIOS DE
                     AVALIAÇÃO DE RISCO PARA ACEITAÇÃO OU NÃO DA COBERTURA SECURITÁRIA, POR ESSE MOTIVO INFORMAMOS QUE O RESULTADO
                     DESTA VISTORIA, INDEPENDE DA ACEITAÇÃO OU NÃO DA SEGURADORA;
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - A SUPER VISÃO NÃO VALIDA A EXISTÊNCIA OU O FUNCIONAMENTO DAS BOLSAS DE AIRBAG NO VEÍCULO;
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - MULTAS, DÉBITOS, RESTRIÇÕES FINANCEIRAS COMO GRAVAME OU OUTROS, NÃO FAZEM PARTE DO ESCOPO DA VISTORIA. PARA
                     LEVANTAMENTO DE DÉBITOS DO VEÍCULO, PROCURAR UM PROFISSIONAL ESPECIALIZADO;
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px]">
+                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
                     - NÃO VERIFICAMOS A PROCEDÊNCIA DA INFORMAÇÃO DE HODÔMETRO EM NOSSAS VISTORIAS DEVIDO A INEXISTÊNCIA DE FERRAMENTAS
                     QUE PERMITAM 100% DE ASSERTIVIDADE.
                   </td>

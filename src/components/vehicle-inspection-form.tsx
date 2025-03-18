@@ -41,9 +41,7 @@ export type VehicleInspectionData = {
     [key: string]: File
   }
   detailFields?: {
-    [key: string]: {
-      [key: string]: string |  { [key: string]: string }
-    }
+    [key: string]: string[][]
   }
 }
 // interface RenderPdfProps {
