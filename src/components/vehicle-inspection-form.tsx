@@ -38,7 +38,7 @@ export type VehicleInspectionData = {
     [key: string]: string
   }
   images: {
-    [key: string]: File
+    [key: string]: string
   }
   detailFields?: {
     [key: string]: string[][] 

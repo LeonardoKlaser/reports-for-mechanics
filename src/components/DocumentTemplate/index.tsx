@@ -1,8 +1,6 @@
 /* eslint-disable */
 import React from "react";
 import type { VehicleInspectionData } from "@/components/vehicle-inspection-form"
-import ImagePreview from '@/components/imagePreview'
-import { ImagePreviewWrapper } from "../image-preview-wrapper";
 
   interface RenderPdfProps {
     formData: VehicleInspectionData
@@ -740,16 +738,21 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                   </div>
                 </div>
               ))}
-            </div>
+            
+          </div>
           </div> */}
-        {/* <div className="w-[calc(100vw-60px)] mx-auto pt-[15px]">
+        <div className="w-[calc(100vw-60px)] mx-auto pt-[15px]">
           <div className="grid grid-cols-3 gap-4 break-inside-avoid">
             {labels.map((label, index) => (
               <div key={index} className="flex flex-col items-center break-inside-avoid-page">
                 <span className="text-sm font-semibold mb-1">{label}</span>
                 <div className="w-full h-[200px] border flex items-center justify-center bg-gray-100">
-                  {images && images[index] ? (
-                    <img src={images[index]} alt={label} className="w-full h-full object-cover" />
+                  {formData.images && formData.images[label] ? (
+                    <img
+                    src={formData.images[label] || "/placeholder.svg"}
+                    alt={`Imagem de ${label}`}
+                    className="rounded-md"
+                  />
                   ) : (
                     <span className="text-gray-400">Imagem aqui</span>
                   )}
@@ -757,8 +760,8 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               </div>
             ))}
           </div>
-        </div> */}
-        <ImagePreviewWrapper images={formData.images} labels={labels} />
+          
+        </div>
       </body>
     </html>
   );

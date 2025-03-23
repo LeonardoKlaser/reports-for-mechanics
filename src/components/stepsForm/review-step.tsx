@@ -137,12 +137,12 @@ export default function ReviewStep() {
         <section className="space-y-2">
           <h3 className="text-lg font-medium">Imagens Carregadas</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {Object.entries(formData.images || {}).map(([partName, file]) => (
+            {Object.entries(formData.images || {}).map(([partName, base64]) => (
               <div key={partName} className="text-sm">
                 <p className="font-medium mb-1">{partName}</p>
                 <div className="relative aspect-video">
                   <Image
-                    src={URL.createObjectURL(file as File) || "/placeholder.svg"}
+                    src={base64 || "/placeholder.svg"}
                     alt={`Imagem de ${partName}`}
                     layout="fill"
                     objectFit="cover"

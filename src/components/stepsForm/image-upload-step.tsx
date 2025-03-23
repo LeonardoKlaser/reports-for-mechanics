@@ -54,25 +54,31 @@ export default function ImageUploadStep() {
   const { setValue } = useFormContext<VehicleInspectionData>()
   const [previewImages, setPreviewImages] = useState<{ [key: string]: string }>({})
 
-  const handleImageUpload = (partName: string, event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (partName: string, event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setPreviewImages((prev) => ({ ...prev, [partName]: reader.result as string }))
-        setValue(`images.${partName}`, file)
-      }
-      reader.readAsDataURL(file)
+      const base64 = await getBase64(file)
+      
+      setPreviewImages((prev) => ({ ...prev, [partName]: base64 }))
+      setValue(`images.${partName}`, base64) // Salva como base64, não como File
     }
   }
 
+  const getBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = reject
+    })
+    
   const handleRemoveImage = (partName: string) => {
     setPreviewImages((prev) => {
       const newPreviews = { ...prev }
       delete newPreviews[partName]
       return newPreviews
     })
-    setValue(`images.${partName}`, null as unknown as File )
+    setValue(`images.${partName}`, "" )
   }
 
   //const images = watch("images")
