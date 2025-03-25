@@ -2,13 +2,45 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useFormContext } from "react-hook-form"
 import type { VehicleInspectionData } from "@/components/vehicle-inspection-form"
+import { Button } from "@/components/ui/button"
+import { useState } from "react"
+import { X } from "lucide-react"
 
 export default function GeneralInfoStep() {
   const {
     register,
+    setValue,
     formState: { errors },
   } = useFormContext<VehicleInspectionData>()
+  
+  const [previewImages, setPreviewImages] = useState<{ [key: string]: string }>({})
 
+  const handleImageUpload = async(imageType: "frontal" | "traseira", event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      const base64 = await getBase64(file)
+      setPreviewImages((prev) => ({ ...prev, [imageType]: base64 }))
+      setValue(`summaryImages.${imageType}` as const, base64)
+      
+    }
+  }
+
+  const getBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = reject
+    })
+
+  const handleRemoveImage = (imageType: "frontal" | "traseira") => {
+    setPreviewImages((prev) => {
+      const newPreviews = { ...prev }
+      delete newPreviews[imageType]
+      return newPreviews
+    })
+    setValue(`summaryImages.${imageType}` as const, "")
+  }
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold mb-4">Informações Gerais do Veículo</h2>
@@ -175,6 +207,64 @@ export default function GeneralInfoStep() {
             className={errors.cliente ? "border-destructive" : ""}
           />
           {errors.cliente && <p className="text-sm text-destructive mt-1">{errors.cliente.message}</p>}
+        </div>
+      </div>
+      <h3 className="text-lg font-semibold mt-6 mb-2">Fotos de Apresentação do Veículo</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Foto Frontal */}
+        <div className="space-y-2">
+          <Label htmlFor="image-frontal">Foto Frontal</Label>
+          <div className="flex items-center space-x-2">
+            <Input
+              id="image-frontal"
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageUpload("frontal", e as React.ChangeEvent<HTMLInputElement>)}
+              className="flex-grow"
+            />
+            {previewImages["frontal"] && (
+              <Button type="button" variant="destructive" size="icon" onClick={() => handleRemoveImage("frontal")}>
+                <X className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+          {previewImages["frontal"] && (
+            <div className="mt-2 relative aspect-video">
+              <img
+                src={previewImages["frontal"] || "/placeholder.svg"}
+                alt="Foto Frontal do Veículo"
+                className="object-cover w-full h-full rounded-md"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Foto Traseira */}
+        <div className="space-y-2">
+          <Label htmlFor="image-traseira">Foto Traseira</Label>
+          <div className="flex items-center space-x-2">
+            <Input
+              id="image-traseira"
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageUpload("traseira", e as React.ChangeEvent<HTMLInputElement>)}
+              className="flex-grow"
+            />
+            {previewImages["traseira"] && (
+              <Button type="button" variant="destructive" size="icon" onClick={() => handleRemoveImage("traseira")}>
+                <X className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+          {previewImages["traseira"] && (
+            <div className="mt-2 relative aspect-video">
+              <img
+                src={previewImages["traseira"] || "/placeholder.svg"}
+                alt="Foto Traseira do Veículo"
+                className="object-cover w-full h-full rounded-md"
+              />
+            </div>
+          )}
         </div>
       </div>
       

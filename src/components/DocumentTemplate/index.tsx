@@ -69,7 +69,11 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                 </div>
                 <div className="px-2 mt-[1px] flex items-center justify-center">
                   <p className="text-gray-700 font-bold text-3xl leading-tight text-center">
-                    Aprovado
+                    {formData.approvalStatus == "approved" ? (
+                      <div>
+                        APROVADO
+                      </div>
+                    ) : (<div>REPROVADO</div>) }
                   </p>
                 </div>
               </td>
@@ -85,8 +89,8 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                 </div>
                 <div className="px-2 mt-[1px] flex items-center justify-center gap-[100px]">
                   {/* Imagens comentadas */}
-                  <img src="https://as1.ftcdn.net/v2/jpg/01/77/74/28/1000_F_177742846_umwpEr5OqwEQd4a9VyS7BGJX3tINNDe7.jpg" alt="Carro 1" className="w-[270px] h-[200px] object-cover" />
-                  <img src="https://as1.ftcdn.net/v2/jpg/01/26/38/26/1000_F_126382672_lwVJuub2kfDnWYtmeJjZaM05njf77iWi.jpg" alt="Carro 2" className="w-[270px] h-[200px] object-cover" />
+                  <img src={formData.summaryImages["frontal"]} alt="Carro 1" className="w-[270px] h-[200px] object-cover" />
+                  <img src={formData.summaryImages["traseira"]} alt="Carro 2" className="w-[270px] h-[200px] object-cover" />
                 </div>
               </td>
             </tr>
@@ -656,64 +660,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               <tbody>
                 <tr>
                   <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - A PRESENTE VISTORIA POSSUI CARÁTER INFORMATIVO DE ANÁLISE PARTICULAR DO VEÍCULO VISTORIADO, NÃO SUBSTITUINDO A
-                    PERÍCIA OFICIAL DO INSTITUTO DE CRIMINALÍSTICA OU QUALQUER LAUDO OFICIAL DE ÓRGÃOS COMPETENTES. OS ÓRGÃOS OFICIAIS
-                    POSSUEM FERRAMENTAS PRÓPRIAS DE ANÁLISE, NÃO DISPONÍVEIS PARA EMPRESAS DE VISTORIA;
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - A UNIDADE SUPER VISÃO PRESTADORA DE SERVIÇO ABAIXO DESCRITA NÃO SE RESPONSABILIZA POR QUAISQUER MODIFICAÇÕES
-                    POSTERIORES À REALIZAÇÃO DA VISTORIA. ESTE DOCUMENTO POSSUI SUA VALIDADE NO EXATO MOMENTO DA VISTORIA;
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - OS ITENS ANALISADOS RESPEITAM O ESCOPO DO RESPECTIVO SERVIÇO CONTRATADO, QUE SÃO APENAS OS ITENS INDICADOS NO
-                    PRESENTE DOCUMENTO, DENTRO DOS CRITÉRIOS ESTABELECIDOS EM CADA UM DELES, NÃO ABRANGENDO NENHUM ITEM QUE NÃO ESTEJA
-                    PRESENTE NESTA VISTORIA;
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - O STATUS/RESULTADO FINAL SEGUE O CRITÉRIO DE AVALIAÇÃO DESENVOLVIDO PELA SUPER VISÃO PERÍCIAS E VISTORIAS LTDA,
-                    PODENDO ESTE SER ALTERADO SEM PRÉVIA COMUNICAÇÃO (ÚLTIMA ATUALIZAÇÃO 18/11/2023);
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - OS ITENS ESTRUTURAIS ANALISADOS CONTEMPLAM AS REGIÕES VISÍVEIS, PASSÍVEIS DE SEREM ANALISADAS SEM DESMONTAGEM DE
-                    PEÇAS;
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - A SUPER VISÃO DISPONIBILIZA NA ÍNTEGRA OS DADOS FORNECIDOS PELAS EMPRESAS DE PESQUISA, NÃO SE RESPONSABILIZANDO POR
-                    INFORMAÇÕES VINDAS DESTES FORNECEDORES POR SE TRATAREM DE BASES DE TERCEIROS;
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - CRITÉRIO DE AVALIAÇÃO DAS SEGURADORAS: AS COMPANHIAS DE SEGURO POSSUEM SEUS PRÓPRIOS MÉTODOS E CRITÉRIOS DE
-                    AVALIAÇÃO DE RISCO PARA ACEITAÇÃO OU NÃO DA COBERTURA SECURITÁRIA, POR ESSE MOTIVO INFORMAMOS QUE O RESULTADO
-                    DESTA VISTORIA, INDEPENDE DA ACEITAÇÃO OU NÃO DA SEGURADORA;
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - A SUPER VISÃO NÃO VALIDA A EXISTÊNCIA OU O FUNCIONAMENTO DAS BOLSAS DE AIRBAG NO VEÍCULO;
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - MULTAS, DÉBITOS, RESTRIÇÕES FINANCEIRAS COMO GRAVAME OU OUTROS, NÃO FAZEM PARTE DO ESCOPO DA VISTORIA. PARA
-                    LEVANTAMENTO DE DÉBITOS DO VEÍCULO, PROCURAR UM PROFISSIONAL ESPECIALIZADO;
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
-                    - NÃO VERIFICAMOS A PROCEDÊNCIA DA INFORMAÇÃO DE HODÔMETRO EM NOSSAS VISTORIAS DEVIDO A INEXISTÊNCIA DE FERRAMENTAS
-                    QUE PERMITAM 100% DE ASSERTIVIDADE.
+                    {formData.finalNotes}
                   </td>
                 </tr>
               </tbody>

@@ -9,6 +9,7 @@ import AccessoriesStep from "@/components/stepsForm/accessorios-step"
 import ImageUploadStep from "@/components/stepsForm/image-upload-step"
 import ConditionCheckStep from "@/components/stepsForm/condition-check-step"
 import ReviewStep from "@/components/stepsForm/review-step"
+import FinalNotesStep from "@/components/stepsForm/final-notes-step"
 import StepIndicator from "@/components/step-indicator"
 import { FormProvider, useForm } from "react-hook-form"
 import { onDownload } from "@/actions/onDownload"
@@ -34,6 +35,10 @@ export type VehicleInspectionData = {
   conditionChecks: {
     [key: string]: "ok" | "issue" | "na"
   }
+  summaryImages: {
+    frontal?: string
+    traseira?: string
+  }
   conditionNotes: {
     [key: string]: string
   }
@@ -43,6 +48,9 @@ export type VehicleInspectionData = {
   detailFields?: {
     [key: string]: string[][] 
   }
+  finalNotes: string
+  approvalStatus: "approved" | "rejected"
+  rejectionReason: string
 }
 // interface RenderPdfProps {
 //   formData: VehicleInspectionData
@@ -79,6 +87,13 @@ const initialData: VehicleInspectionData = {
   },
   // Inicialize o campo de imagens
   images: {},
+  summaryImages: {
+    frontal: "",
+    traseira: ""
+  },
+  finalNotes: "",
+  approvalStatus: "approved",
+  rejectionReason: "",
 }
 
 export default function VehicleInspectionForm() {
@@ -99,6 +114,7 @@ export default function VehicleInspectionForm() {
     { name: "Acessórios", component: AccessoriesStep, validationFields: [] },
     { name: "Upload de Imagens", component: ImageUploadStep, validationFields: [] },
     { name: "Verificação de Condição", component: ConditionCheckStep, validationFields: [] },
+    { name: "Observações Finais", component: FinalNotesStep, validationFields: [] },
     { name: "Revisão", component: ReviewStep, validationFields: [] },
   ]
 

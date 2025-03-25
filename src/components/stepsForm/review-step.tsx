@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 
 interface ExtendedVehicleInspectionData extends VehicleInspectionData {
   detailFields?: {
-    [key: string]: string[][] 
+    [key: string]: string[][]
   }
 }
 
@@ -74,7 +74,16 @@ export default function ReviewStep() {
               {Object.entries(formData).map(([key, value]) => {
                 if (
                   typeof value === "string" &&
-                  !["accessories", "images", "conditionChecks", "detailFields"].includes(key)
+                  ![
+                    "accessories",
+                    "images",
+                    "summaryImages",
+                    "conditionChecks",
+                    "detailFields",
+                    "finalNotes",
+                    "approvalStatus",
+                    "rejectionReason",
+                  ].includes(key)
                 ) {
                   return (
                     <React.Fragment key={key}>
@@ -97,7 +106,16 @@ export default function ReviewStep() {
               {Object.entries(formData).map(([key, value]) => {
                 if (
                   typeof value === "string" &&
-                  !["accessories", "images", "conditionChecks", "detailFields"].includes(key)
+                  ![
+                    "accessories",
+                    "images",
+                    "summaryImages",
+                    "conditionChecks",
+                    "detailFields",
+                    "finalNotes",
+                    "approvalStatus",
+                    "rejectionReason",
+                  ].includes(key)
                 ) {
                   return (
                     <React.Fragment key={key}>
@@ -110,6 +128,32 @@ export default function ReviewStep() {
               })}
             </div>
           )}
+        </section>
+
+        {/* Seção de Fotos de Resumo */}
+        <section className="space-y-2">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-medium">Fotos de Apresentação</h3>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            {Object.entries(formData.summaryImages || {}).map(
+              ([key, base64]) =>
+                base64 && (
+                  <div key={key} className="text-sm">
+                    <p className="font-medium mb-1">{key === "frontal" ? "Foto Frontal" : "Foto Traseira"}</p>
+                    <div className="relative aspect-video">
+                      <Image
+                        src={base64 || "/placeholder.svg"}
+                        alt={`Foto ${key}`}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-md"
+                      />
+                    </div>
+                  </div>
+                ),
+            )}
+          </div>
         </section>
 
         <section className="space-y-2">
@@ -137,20 +181,23 @@ export default function ReviewStep() {
         <section className="space-y-2">
           <h3 className="text-lg font-medium">Imagens Carregadas</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {Object.entries(formData.images || {}).map(([partName, base64]) => (
-              <div key={partName} className="text-sm">
-                <p className="font-medium mb-1">{partName}</p>
-                <div className="relative aspect-video">
-                  <Image
-                    src={base64 || "/placeholder.svg"}
-                    alt={`Imagem de ${partName}`}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-md"
-                  />
-                </div>
-              </div>
-            ))}
+            {Object.entries(formData.images || {}).map(
+              ([partName, base64]) =>
+                base64 && (
+                  <div key={partName} className="text-sm">
+                    <p className="font-medium mb-1">{partName}</p>
+                    <div className="relative aspect-video">
+                      <Image
+                        src={base64 || "/placeholder.svg"}
+                        alt={`Imagem de ${partName}`}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-md"
+                      />
+                    </div>
+                  </div>
+                ),
+            )}
           </div>
         </section>
 
@@ -204,16 +251,19 @@ export default function ReviewStep() {
                       {Object.entries(details).map(([labelKey, labelData]) => (
                         <div key={`${item.id}-${labelKey}`}>
                           <p className="font-medium">
-                            {typeof labelData === "object"
-                              ? labelData || `Detalhe ${labelKey}`
-                              : `Detalhe ${labelKey}`}
+                            {typeof labelData === "object" ? labelData || `Detalhe ${labelKey}` : `Detalhe ${labelKey}`}
                             :
                           </p>
                           {editMode === "condition" ? (
                             typeof labelData === "string" ? (
                               <Input
                                 value={labelData}
-                                onChange={(e) => setValue(`detailFields.${item.id}.${labelKey}` as keyof ExtendedVehicleInspectionData, e.target.value)}
+                                onChange={(e) =>
+                                  setValue(
+                                    `detailFields.${item.id}.${labelKey}` as keyof ExtendedVehicleInspectionData,
+                                    e.target.value,
+                                  )
+                                }
                               />
                             ) : (
                               <div className="pl-4 space-y-2">
@@ -224,7 +274,10 @@ export default function ReviewStep() {
                                       id={`${item.id}-${labelKey}-${infoKey}`}
                                       value={infoValue as string}
                                       onChange={(e) =>
-                                        setValue(`detailFields.${item.id}.${labelKey}.${infoKey}` as keyof ExtendedVehicleInspectionData, e.target.value)
+                                        setValue(
+                                          `detailFields.${item.id}.${labelKey}.${infoKey}` as keyof ExtendedVehicleInspectionData,
+                                          e.target.value,
+                                        )
                                       }
                                     />
                                   </div>
@@ -250,6 +303,87 @@ export default function ReviewStep() {
               )
             })}
           </div>
+        </section>
+
+        {/* Seção de Observações Finais */}
+        <section className="space-y-2">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-medium">Observações Finais</h3>
+            {editMode !== "finalNotes" ? (
+              <Button onClick={() => handleEdit("finalNotes")}>Editar</Button>
+            ) : (
+              <Button onClick={handleSave}>Salvar</Button>
+            )}
+          </div>
+          {editMode === "finalNotes" ? (
+            <div className="space-y-4">
+              <Textarea
+                value={formData.finalNotes}
+                onChange={(e) => setValue("finalNotes", e.target.value)}
+                className="min-h-[150px]"
+              />
+
+              <div className="border rounded-md p-4 space-y-4">
+                <h4 className="font-medium">Situação Geral do Veículo</h4>
+
+                <RadioGroup
+                  value={formData.approvalStatus}
+                  onValueChange={(value) => setValue("approvalStatus", value as "approved" | "rejected")}
+                  className="space-y-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="approved" id="review-approved" />
+                    <Label htmlFor="review-approved" className="font-medium text-green-600">
+                      Aprovado
+                    </Label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="rejected" id="review-rejected" />
+                    <Label htmlFor="review-rejected" className="font-medium text-red-600">
+                      Reprovado
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="review-rejection-reason">Motivo da Reprovação (se aplicável)</Label>
+                <Textarea
+                  id="review-rejection-reason"
+                  value={formData.rejectionReason}
+                  onChange={(e) => setValue("rejectionReason", e.target.value)}
+                  className="min-h-[100px]"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div className="text-sm border rounded-md p-3 bg-muted/50">
+                {formData.finalNotes || "Nenhuma observação final registrada"}
+              </div>
+
+              <div className="border rounded-md p-3">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">Situação Geral:</span>
+                  <span
+                    className={
+                      formData.approvalStatus === "approved" ? "text-green-600 font-medium" : "text-red-600 font-medium"
+                    }
+                  >
+                    {formData.approvalStatus === "approved" ? "Aprovado ✓" : "Reprovado ✗"}
+                  </span>
+                </div>
+
+                {formData.approvalStatus === "rejected" && formData.rejectionReason && (
+                  <div className="mt-2">
+                    <p className="font-medium">Motivo da Reprovação:</p>
+                    <p className="text-sm mt-1">{formData.rejectionReason}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </section>
       </div>
 
