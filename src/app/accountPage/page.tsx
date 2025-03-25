@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { db } from "@/lib/db"
 import { LogOut } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -14,6 +15,33 @@ export default function AccountPage() {
   if(!data?.user){
     router.push('/')
   }
+
+  const getBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = reject
+    })
+
+  const updateCompanyUpdate = async(event: React.ChangeEvent<HTMLInputElement>)=>{
+    const file = event.target.files?.[0]
+    if(file){
+      const base64Image = await getBase64(file);
+      const email = data?.user?.email;
+      if(email){
+        await db.user.update({
+          where: {
+            email: email,
+          },
+          data:{
+            image: base64Image
+          }
+        })
+      }
+    } 
+  }
+
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-3xl font-bold mb-6">Minha conta</h1>
@@ -42,6 +70,16 @@ export default function AccountPage() {
               <div className="space-y-2">
                 <Label htmlFor="company">Empresa</Label>
                 <Input id="company" placeholder={data?.user?.name as string} />
+              </div>
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="company">Logo da empresa</Label>
+                <Input
+                  id={"imageProfile"}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => updateCompanyUpdate(e as React.ChangeEvent<HTMLInputElement>)}
+                  className="flex-grow"
+                />
               </div>
             </CardContent>
             <CardFooter>
