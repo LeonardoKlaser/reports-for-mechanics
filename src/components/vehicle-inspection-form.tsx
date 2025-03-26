@@ -14,6 +14,8 @@ import StepIndicator from "@/components/step-indicator"
 import { FormProvider, useForm } from "react-hook-form"
 import { onDownload } from "@/actions/onDownload"
 import { useToast } from "@/hooks/use-toast"
+import { useSession } from "next-auth/react"
+import { debug } from "console"
 
 // Atualize a estrutura de dados do formulário
 export type VehicleInspectionData = {
@@ -51,6 +53,7 @@ export type VehicleInspectionData = {
   finalNotes: string
   approvalStatus: "approved" | "rejected"
   rejectionReason: string
+  imageCompany: string
 }
 // interface RenderPdfProps {
 //   formData: VehicleInspectionData
@@ -94,11 +97,13 @@ const initialData: VehicleInspectionData = {
   finalNotes: "",
   approvalStatus: "approved",
   rejectionReason: "",
+  imageCompany: ""
 }
 
 export default function VehicleInspectionForm() {
   const [currentStep, setCurrentStep] = useState(0)
   const {toast} = useToast();
+  const {data: session} = useSession();
 
   const methods = useForm<VehicleInspectionData>({
     defaultValues: initialData,
@@ -139,9 +144,19 @@ export default function VehicleInspectionForm() {
     }
   }
 
-  const onSubmit = (data: VehicleInspectionData) => {
-    onDownload({formData: data}, toast);
-    console.log("Gerando PDF com os dados:", data);
+  const onSubmit = async(data: VehicleInspectionData) => {
+    debugger
+    const email = session?.user?.email;
+    const response = await fetch("/api/get-user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    const result = await response.json();
+    const imageCompany = result.image ?? "";
+    const updateData = {...data, imageCompany};
+    onDownload({formData: updateData}, toast);
+    console.log("Gerando PDF com os dados:", updateData);
   }
 
   return (

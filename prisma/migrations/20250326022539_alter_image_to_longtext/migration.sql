@@ -5,4 +5,5 @@
 
 */
 -- AlterTable
-ALTER TABLE `user` ADD COLUMN `password` VARCHAR(191) NOT NULL;
+ALTER TABLE `User` ADD COLUMN `password` VARCHAR(191) NOT NULL,
+    MODIFY `image` LONGTEXT NULL;

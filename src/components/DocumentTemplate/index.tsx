@@ -18,7 +18,6 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
     "Acabamento P.D", "Banco Traseiro", "Pneus/Rodas Diant esq.", "Pneus/Rodas Traseiro Esq.", "Pneus/Rodas Traseiro Dir", "Pneus/Rodas Diant. Direito", "Pneu Estepe", "Extra Impressa 1"
   ];
   const acessories = formData.accessories.split(",");
-  const {data} = useSession();
   return (
     <html>
       <head>
@@ -58,7 +57,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
 
           {/* Logo no lado direito */}
           <div className="relative ml-auto mr-6">
-            <img src={data?.user?.image ? data?.user?.image : "" } alt="Super Visão" className="w-[270px] h-[100px] object-cover" />
+            <img src={formData.imageCompany} alt="Super Visão" className="w-[270px] h-[100px] object-cover" />
           </div>
         </div>
         <div>

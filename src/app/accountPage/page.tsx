@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { db } from "@/lib/db"
 import { LogOut } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -25,19 +24,26 @@ export default function AccountPage() {
     })
 
   const updateCompanyUpdate = async(event: React.ChangeEvent<HTMLInputElement>)=>{
+    debugger
     const file = event.target.files?.[0]
     if(file){
       const base64Image = await getBase64(file);
       const email = data?.user?.email;
-      if(email){
-        await db.user.update({
-          where: {
-            email: email,
-          },
-          data:{
-            image: base64Image
-          }
-        })
+      
+      if (!email) {
+        console.error("Erro: Usuário não autenticado");
+        return;
+      }
+
+      const response = await fetch("/api/update-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, image: base64Image }),
+      });
+      if (!response.ok) {
+        console.error("Erro ao atualizar a imagem");
+      } else {
+        console.log("Imagem atualizada com sucesso");
       }
     } 
   }

@@ -9,6 +9,7 @@ import logoutAction from "@/app/(auth)/(logout)/logoutAction";
 import { useSession } from "next-auth/react"
 
 export function NavMenu() {
+  debugger
   const {data} = useSession();
   return (
     <nav className="flex items-center justify-between p-4 bg-navMenu">

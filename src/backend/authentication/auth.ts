@@ -6,6 +6,7 @@ import { findUserByCredentials } from "@/lib/user";
 
 export const {handlers: {GET, POST}, auth} = NextAuth({
     adapter: PrismaAdapter(db),
+    debug : true,
     providers: [
         Credentials({
             credentials: {
