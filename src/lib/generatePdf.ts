@@ -32,7 +32,7 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
         printBackground: true,
         preferCSSPageSize: true,
         // displayHeaderFooter: true,
-        // headerTemplate: cssH + '<div></div>',
+        // headerTemplate: '<span style="height: 200px;"></span>',
         // footerTemplate: css + '<h1>Page <span class="pageNumber"></span> of <span class="totalPages"></span></h1>',
         margin: { top: "40px",  bottom: "40px" }
     });

@@ -44,7 +44,8 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
         </style>
       </head>
       <body>
-        <div className="relative w-full h-[100px] bg-white flex items-center px-4">
+        <div className="h-[-40px]"></div>
+        <header className="relative w-full h-[100px] bg-white flex items-center px-4 absolute -top-10">
           {/* Faixa diagonal */}
           <div className="absolute top-0 left-0 w-full h-full bg-blue-900" style={{
             clipPath: "polygon(0% 0%, 65% 0%, 50% 100%, 0% 100%)"
@@ -57,9 +58,9 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
 
           {/* Logo no lado direito */}
           <div className="relative ml-auto mr-6">
-            <img src={formData.imageCompany} alt="Super Visão" className="w-[270px] h-[100px] object-cover" />
+            <img src={formData.imageCompany} alt="Super Visão" className="w-[220px] h-[100px] object-cover" />
           </div>
-        </div>
+        </header>
         <div>
           <table className="w-[calc(100vw-60px)] mx-auto border-collapse mt-[15px]">
             {/* SITUAÇÃO GERAL */}
@@ -71,10 +72,10 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                 <div className="px-2 mt-[1px] flex items-center justify-center">
                   <p className="text-gray-700 font-bold text-3xl leading-tight text-center">
                     {formData.approvalStatus == "approved" ? (
-                      <div>
+                      <p className="text-gray-700 font-bold text-3xl leading-tight text-center">
                         APROVADO
-                      </div>
-                    ) : (<div>REPROVADO</div>) }
+                      </p>
+                    ) : (<p className="text-gray-700 font-bold text-3xl leading-tight text-center">REPROVADO</p>) }
                   </p>
                 </div>
               </td>
@@ -90,8 +91,8 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                 </div>
                 <div className="px-2 mt-[1px] flex items-center justify-center gap-[100px]">
                   {/* Imagens comentadas */}
-                  <img src={formData.summaryImages["frontal"]} alt="Carro 1" className="w-[270px] h-[200px] object-cover" />
-                  <img src={formData.summaryImages["traseira"]} alt="Carro 2" className="w-[270px] h-[200px] object-cover" />
+                  <img src={formData.summaryImages["frontal"]} alt="Carro 1" className="w-[270px] h-[180px] object-cover" />
+                  <img src={formData.summaryImages["traseira"]} alt="Carro 2" className="w-[270px] h-[180px] object-cover" />
                 </div>
               </td>
             </tr>
@@ -103,7 +104,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               DADOS GERAIS DO VEÍCULO
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-[9px]">
+              <table className="w-full text-[9px] break-inside-avoid">
                 <tbody>
                   {[
                     { label: "Número do Laudo", value: `${formData.reportNumber}` },
@@ -132,7 +133,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               RESUMO DE STATUS
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-[9px]">
+              <table className="w-full text-[9px] break-inside-avoid">
                 <tbody>
                   {[
                      { label: "CHASSI 2", value: "ANALISA AS CONDIÇÕES DA GRAVAÇÃO DO CHASSI DO VEÍCULO. ITEM DE IDENTIFICAÇÃO OBRIGATÓRIO.", checkKey: "chassi" },
@@ -165,29 +166,31 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
           </div>
         </div>
 
-        <div className="w-[calc(100vw-60px)] mx-auto pt-[15px]">
-          <div className="border-2 border-gray-300 p-[5px]">
-            <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
-              ACESSÓRIOS E COMPLEMENTOS
-            </div>
-            <div className="px-2 mt-[1px]">
-              <table className="w-full text-[9px]">
-                <tbody>
-                  <tr>
-                    <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] leading-tight text-left">
-                      • ACESSÓRIOS E EXTRAS
-                    </td>
-                  </tr>
-                  {acessories.map((item, index) => (
-                    <tr key={index} className="border-b border-gray-300">
-                      <td className="pl-[15px] w-1/2 text-left">{item}</td>
+        <table className="w-[calc(100vw-60px)] mx-auto border-collapse mt-[15px]">
+          <tbody>
+            <tr>
+              <td className="border-2 border-gray-300 p-[5px]">
+                <div className="bg-gray-500 text-white px-2 py-1 font-bold text-sl leading-tight">
+                  ACESSÓRIOS E COMPLEMENTOS
+                </div>
+                <table className="w-full text-[9px] break-inside-avoid">
+                  <tbody>
+                    <tr>
+                      <td className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] leading-tight text-left">
+                        • ACESSÓRIOS E EXTRAS
+                      </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+                    {acessories.map((item, index) => (
+                      <tr key={index} className="border-b border-gray-300">
+                        <td className="pl-[15px] w-1/2 text-left">{item}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         <div className="w-[calc(100vw-60px)] mx-auto pt-[15px]">
           {/* CHASSI V2 */}
@@ -196,7 +199,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               CHASSI V2
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-[9px]">
+              <table className="w-full text-[9px] break-inside-avoid">
                 <tbody>
                   <tr>
                     <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300"colSpan={2}>
@@ -237,7 +240,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               MOTOR V2 .
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-[9px]">
+              <table className="w-full text-[9px] break-inside-avoid">
                 <tbody>
                   <tr>
                     <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300">
@@ -276,7 +279,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               CÂMBIO V2
             </div>
             <div className="px-2 mt-[1px]">
-              <table className="w-full text-[9px]">
+              <table className="w-full text-[9px] break-inside-avoid">
                 <tbody>
                   <tr>
                     <td className="text-left font-bold pl-[15px] py-1 border-b border-gray-300">
@@ -339,33 +342,33 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
           </div>
 
           {/* PLACAS V2 */}
-          <div className="border-2 border-gray-300 p-[5px] mt-[15px]">
-            <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
-              PLACAS V2
-            </div>
-            <div className="px-2 mt-[1px]">
-              <table className="w-full text-[9px]">
-                <tbody>
-                  <tr>
-                    <td className="pl-[25px] py-1 text-left font-bold">
-                      • PLACA DIANTEIRA
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="pl-[40px]  ">{formData?.detailFields?.placas[0]}</td>
-                  </tr>
-                  <tr >
-                    <td className="pl-[25px] py-1 text-left font-bold">
-                      • PLACA TRASEIRA
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="pl-[40px] ">{formData?.detailFields?.placas[1]}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <table className="w-[calc(100vw-60px)] mx-auto border-collapse mt-[15px] break-inside-avoid">
+            <tbody>
+              <tr>
+                <td className="border-2 border-gray-300 p-[5px]">
+                  <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
+                    PLACAS V2
+                  </div>
+                  <table className="w-full text-[9px] break-inside-avoid">
+                    <tbody>
+                      <tr>
+                        <td className="pl-[25px] py-1 text-left font-bold">• PLACA DIANTEIRA</td>
+                      </tr>
+                      <tr className="border-b border-gray-300">
+                        <td className="pl-[40px]">{formData?.detailFields?.placas[0]}</td>
+                      </tr>
+                      <tr>
+                        <td className="pl-[25px] py-1 text-left font-bold">• PLACA TRASEIRA</td>
+                      </tr>
+                      <tr className="border-b border-gray-300">
+                        <td className="pl-[40px]">{formData?.detailFields?.placas[1]}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
 
@@ -552,7 +555,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
               <p className="text-gray-700 font-bold text-xs pl-[15px] pt-[8px] pb-[5px] leading-tight text-left">
                 • ESTRUTURA VEICULAR - OUTROS
               </p>
-              <table className="w-full text-[9px]">
+              <table className="w-full text-[9px] break-inside-avoid">
                 <tbody>
                   <tr className="border-b border-gray-300">
                     <td className="pl-[40px] w-[50%]">ASSOALHO DO MONOBLOCO (HABITÁCULO, ÁREA VISÍVEL) . :</td>
@@ -589,7 +592,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
             <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
               HISTÓRICO: LEILÃO/SINISTRO/R/F
             </div>
-            <table className="w-full mt-[1px] text-[9px]">
+            <table className="w-full mt-[1px] text-[9px] break-inside-avoid">
               <tbody>
                 <tr>
                   <td className="text-gray-700 font-bold pl-[15px] pt-[8px] pb-[5px] text-left" >
@@ -606,37 +609,43 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
           </div>
 
           {/* DOCUMENTAÇÃO V2 */}
-          <div className="border-2 border-gray-300 p-[5px] mb-[10px]">
-            <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
-              DOCUMENTAÇÃO V2
-            </div>
-            <table className="w-full mt-[1px] text-[9px]">
-              <tbody>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px] text-left" >
-                    • CRLV/PESQUISA NOVO
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-left  font-normal pl-[40px] w-1/2  border-b border-gray-300">
-                    NENHUM REGISTRO ENCONTRADO
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px] text-left" >
-                    • VEÍCULO NOVO
-                  </td>
-                </tr>
-                <tr>
-                  <td className="text-left font-normal pl-[40px] w-1/2 border-b border-gray-300">
-                    NENHUM REGISTRO ENCONTRADO
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <table className="w-[calc(100vw-60px)] mx-auto border-collapse mb-[10px]">
+            <tbody>
+              <tr>
+                <td className="border-2 border-gray-300 p-[5px]">
+                  <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
+                    DOCUMENTAÇÃO V2
+                  </div>
+                  <table className="w-full mt-[1px] text-[9px] break-inside-avoid">
+                    <tbody>
+                      <tr>
+                        <td className="text-gray-700 font-bold pl-[15px] pt-[8px] pb-[5px] text-left">
+                          • CRLV/PESQUISA NOVO
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="text-left font-normal pl-[40px] w-1/2 border-b border-gray-300">
+                          NENHUM REGISTRO ENCONTRADO
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="text-gray-700 font-bold pl-[15px] pt-[8px] pb-[5px] text-left">
+                          • VEÍCULO NOVO
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="text-left font-normal pl-[40px] w-1/2 border-b border-gray-300">
+                          NENHUM REGISTRO ENCONTRADO
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-          {/* OBSERVAÇÃO */}
+          {/* OBSERVAÇÃO
           <div className="border-2 border-gray-300 p-[5px] mb-[10px]">
             <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
               OBSERVAÇÃO
@@ -650,14 +659,14 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> */}
 
           {/* OBSERVAÇÕES GERAIS */}
           <div className="border-2 border-gray-300 p-[5px]">
             <div className="bg-gray-500 text-white px-2 py-1 font-bold text-xs leading-tight">
               OBSERVAÇÕES GERAIS
             </div>
-            <table className="w-full mt-[1px] text-[9px]">
+            <table className="w-full mt-[1px] text-[9px] break-inside-avoid">
               <tbody>
                 <tr>
                   <td className="text-gray-700 font-bold  pl-[15px] pt-[8px] pb-[5px]">
@@ -699,7 +708,7 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                     <img
                     src={formData.images[label] || "/placeholder.svg"}
                     alt={`Imagem de ${label}`}
-                    className="rounded-md"
+                    className="rounded-md w-[200px] h-[200px] object-cover"
                   />
                   ) : (
                     <span className="text-gray-400">Imagem aqui</span>
