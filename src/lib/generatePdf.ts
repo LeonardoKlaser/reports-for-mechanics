@@ -1,4 +1,5 @@
-import puppeteer from "puppeteer";
+import chromium from '@sparticuz/chromium';
+import puppeteer from 'puppeteer-core';
 import path from "path";
 
 // interface generatePdfProps {
@@ -7,19 +8,36 @@ import path from "path";
 //     isDownload: boolean
 // }
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const generatePdf = async (htmlContent: string, documentId : string, isDownload : boolean) => {
+    let browser = null;
     try {
+        console.log('Ambiente:', process.env.NODE_ENV);
+        console.log('É produção?', isProduction);
         console.log('Iniciando Puppeteer...');
-        const browser = await puppeteer.launch({
-            headless: true,
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-accelerated-2d-canvas',
-                '--disable-gpu'
-            ]
-        });
+        
+        const options = isProduction 
+            ? {
+                args: chromium.args,
+                defaultViewport: chromium.defaultViewport,
+                executablePath: await chromium.executablePath(),
+                headless: chromium.headless,
+                ignoreHTTPSErrors: true,
+            }
+            : {
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                executablePath: process.platform === 'win32'
+                    ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+                    : process.platform === 'linux'
+                    ? '/usr/bin/google-chrome'
+                    : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+                headless: true,
+                ignoreHTTPSErrors: true,
+            };
+
+        console.log('Usando opções:', isProduction ? 'Produção (Vercel)' : 'Desenvolvimento (Local)');
+        browser = await puppeteer.launch(options);
         
         console.log('Criando nova página...');
         const page = await browser.newPage();
@@ -66,6 +84,9 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
         return pdfBuffer;
     } catch (error) {
         console.error('Erro ao gerar PDF:', error);
+        if (browser) {
+            await browser.close();
+        }
         throw error;
     }
 }
