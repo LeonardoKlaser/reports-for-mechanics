@@ -97,7 +97,7 @@ const initialData: VehicleInspectionData = {
   finalNotes: "",
   approvalStatus: "approved",
   rejectionReason: "",
-  imageCompany: ""
+  imageCompany: "",
 }
 
 export default function VehicleInspectionForm() {

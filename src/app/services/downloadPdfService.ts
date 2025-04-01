@@ -4,14 +4,15 @@ import type { VehicleInspectionData } from "@/components/vehicle-inspection-form
 
 interface RenderPdfProps {
     formData: VehicleInspectionData
-  }
+}
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export const downloadPdfServices = {
     downloadPdf: async ({formData} : RenderPdfProps) =>{
        try{
-        debugger;
         const res = await axios.post(
-            `http://localhost:3000/api/generate-pdf/12`, 
+            `${API_URL}/api/generate-pdf/12`, 
             {formData}, 
             {responseType: "arraybuffer"} //manipular dados binários para o PDF
         );
