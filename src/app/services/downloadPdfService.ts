@@ -12,7 +12,7 @@ export const downloadPdfServices = {
     downloadPdf: async ({formData} : RenderPdfProps) =>{
        try{
         const res = await axios.post(
-            `http://localhost:3000/api/generate-pdf/12`, 
+            `${API_URL}/api/generate-pdf/12`, 
             {formData}, 
             {responseType: "arraybuffer"} //manipular dados binários para o PDF
         );
