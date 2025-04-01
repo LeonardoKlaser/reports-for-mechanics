@@ -9,9 +9,10 @@ interface RenderPdfProps {
   formData: VehicleInspectionData
 }
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { formData } = await request.json();
+    const { id } = await params;
     
     // Configurar headers CORS
     const headers = {
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     // Gerar o PDF
     const htmlContent = await RenderPdf({ formData });
-    const pdfBuffer = await generatePdf(htmlContent.document, params.id, true);
+    const pdfBuffer = await generatePdf(htmlContent.document, id, true);
 
     // Retornar o PDF com os headers corretos
     return new NextResponse(pdfBuffer, {
