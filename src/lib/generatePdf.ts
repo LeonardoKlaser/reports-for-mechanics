@@ -1,5 +1,6 @@
 import chromium from '@sparticuz/chromium';
 import puppeteerCore from 'puppeteer-core';
+import * as puppeteer from 'puppeteer';
 import path from "path";
 
 // interface generatePdfProps {
@@ -23,7 +24,7 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
                     defaultViewport: chromium.defaultViewport,
                     executablePath: await chromium.executablePath(),
                     headless: chromium.headless,
-                  }) : await puppeteerCore.launch({
+                  }) : await puppeteer.launch({
                     args: ['--no-sandbox', '--disable-setuid-sandbox'],
                     headless: true,
                   })
