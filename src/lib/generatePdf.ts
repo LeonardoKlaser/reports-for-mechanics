@@ -1,6 +1,5 @@
 import chromium from '@sparticuz/chromium';
 import puppeteerCore from 'puppeteer-core';
-import * as puppeteer from 'puppeteer';
 import path from "path";
 
 // interface generatePdfProps {
@@ -18,14 +17,17 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
         console.log('É produção?', isProduction);
         console.log('Iniciando Puppeteer...');
         
+        chromium.setHeadlessMode = true;
+        chromium.setGraphicsMode = false;
+        const execPath = await chromium.executablePath() || '/usr/bin/chromium';
         
                 browser = isProduction ? await puppeteerCore.launch({
                     ignoreDefaultArgs: ['--disable-extensions'],
                     args: chromium.args,
                     defaultViewport: chromium.defaultViewport,
-                    executablePath: await chromium.executablePath(),
+                    executablePath: execPath,
                     headless: chromium.headless,
-                  }) : await puppeteer.launch({
+                  }) : await puppeteerCore.launch({
                     args: ['--no-sandbox', '--disable-setuid-sandbox'],
                     headless: true,
                   })
@@ -33,7 +35,7 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
 
         console.log('Usando opções:', isProduction ? 'Produção (Vercel)' : 'Desenvolvimento (Local)');
         // console.log('Executable Path:', options.executablePath);
-        
+        console.log('Browser:', browser);   
         // browser = await puppeteerCore.launch(options);
         
         console.log('Criando nova página...');
@@ -51,9 +53,9 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
             timeout: 30000
         });
 
-        //salva o pdf em uma pasta publica 
+        // salva o pdf em uma pasta publica 
         if(!isDownload){
-            const outputPath = path.join(process.cwd(), `public/documents/document-${documentId}.pdf`);
+            const outputPath = path.join('/tmp', `document-${documentId}.pdf`);
             await page.pdf({
                 path: outputPath, 
                 format: "a4", 
