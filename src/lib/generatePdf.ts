@@ -1,5 +1,5 @@
 import chromium from '@sparticuz/chromium';
-import puppeteer from 'puppeteer-core';
+import puppeteerCore from 'puppeteer-core';
 import path from "path";
 
 // interface generatePdfProps {
@@ -19,10 +19,20 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
         
         const options = isProduction 
             ? {
-                args: chromium.args,
+                args: [
+                    ...chromium.args,
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-gpu',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    '--disable-extensions'
+                ],
                 defaultViewport: chromium.defaultViewport,
                 executablePath: await chromium.executablePath(),
-                headless: chromium.headless,
+                headless: true,
                 ignoreHTTPSErrors: true,
             }
             : {
@@ -37,7 +47,9 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
             };
 
         console.log('Usando opções:', isProduction ? 'Produção (Vercel)' : 'Desenvolvimento (Local)');
-        browser = await puppeteer.launch(options);
+        console.log('Executable Path:', options.executablePath);
+        
+        browser = await puppeteerCore.launch(options);
         
         console.log('Criando nova página...');
         const page = await browser.newPage();
@@ -59,7 +71,7 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
             const outputPath = path.join(process.cwd(), `public/documents/document-${documentId}.pdf`);
             await page.pdf({
                 path: outputPath, 
-                format: "A4", 
+                format: "a4", 
                 printBackground: true, 
                 preferCSSPageSize: true, 
                 displayHeaderFooter: true,
@@ -72,7 +84,7 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
 
         console.log('Gerando PDF...');
         const pdfBuffer = await page.pdf({
-            format: "A4",
+            format: "a4",
             printBackground: true,
             preferCSSPageSize: true,
             displayHeaderFooter: false
