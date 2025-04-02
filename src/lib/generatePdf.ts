@@ -1,4 +1,5 @@
-import { chromium } from '@playwright/test';
+import chromium from '@sparticuz/chromium';
+import { chromium as playwrightChromium } from '@playwright/test';
 import path from "path";
 
 // interface generatePdfProps {
@@ -16,10 +17,17 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
         console.log('É produção?', isProduction);
         console.log('Iniciando Playwright...');
         
-        browser = await chromium.launch({
+        const options = isProduction ? {
+            args: chromium.args,
+            executablePath: await chromium.executablePath(),
+            headless: true,
+            ignoreDefaultArgs: ['--disable-extensions']
+        } : {
             headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
+        };
+
+        browser = await playwrightChromium.launch(options);
         
         console.log('Criando nova página...');
         const page = await browser.newPage();

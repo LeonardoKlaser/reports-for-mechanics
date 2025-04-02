@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate && npx playwright install chromium --with-deps"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
@@ -42,6 +42,7 @@
     "@radix-ui/react-toggle": "^1.1.1",
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.7",
+    "@sparticuz/chromium": "^123.0.0",
     "axios": "^1.7.9",
     "bcrypt-ts": "^5.0.3",
     "class-variance-authority": "^0.7.1",
