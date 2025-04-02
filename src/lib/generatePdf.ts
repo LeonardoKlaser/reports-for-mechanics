@@ -17,39 +17,22 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
         console.log('É produção?', isProduction);
         console.log('Iniciando Puppeteer...');
         
-        const options = isProduction 
-            ? {
-                args: [
-                    ...chromium.args,
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                    '--disable-gpu',
-                    '--no-first-run',
-                    '--no-zygote',
-                    '--single-process',
-                    '--disable-extensions'
-                ],
-                defaultViewport: chromium.defaultViewport,
-                executablePath: await chromium.executablePath(),
-                headless: true,
-                ignoreHTTPSErrors: true,
-            }
-            : {
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                executablePath: process.platform === 'win32'
-                    ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-                    : process.platform === 'linux'
-                    ? '/usr/bin/google-chrome'
-                    : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-                headless: true,
-                ignoreHTTPSErrors: true,
-            };
+        
+                browser = isProduction ? await puppeteerCore.launch({
+                    args: chromium.args,
+                    defaultViewport: chromium.defaultViewport,
+                    executablePath: await chromium.executablePath(),
+                    headless: chromium.headless,
+                  }) : await puppeteerCore.launch({
+                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                    headless: true,
+                  })
+           
 
         console.log('Usando opções:', isProduction ? 'Produção (Vercel)' : 'Desenvolvimento (Local)');
-        console.log('Executable Path:', options.executablePath);
+        // console.log('Executable Path:', options.executablePath);
         
-        browser = await puppeteerCore.launch(options);
+        // browser = await puppeteerCore.launch(options);
         
         console.log('Criando nova página...');
         const page = await browser.newPage();
