@@ -20,6 +20,7 @@ export const generatePdf = async (htmlContent: string, documentId : string, isDo
         
         
                 browser = isProduction ? await puppeteerCore.launch({
+                    ignoreDefaultArgs: ['--disable-extensions'],
                     args: chromium.args,
                     defaultViewport: chromium.defaultViewport,
                     executablePath: await chromium.executablePath(),
