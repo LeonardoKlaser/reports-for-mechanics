@@ -101,7 +101,7 @@ const initialData: VehicleInspectionData = {
 }
 
 // Função para comprimir imagens
-const compressImage = async (base64String: string, maxWidth = 800, quality = 0.7): Promise<string> => {
+const compressImage = async (base64String: string, maxWidth = 800, quality = 0.5): Promise<string> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.src = base64String;
