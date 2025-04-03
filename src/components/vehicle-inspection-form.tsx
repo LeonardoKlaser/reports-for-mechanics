@@ -101,7 +101,7 @@ const initialData: VehicleInspectionData = {
 }
 
 // Função para comprimir imagens
-const compressImage = async (base64String: string, maxWidth = 800, quality = 0.5): Promise<string> => {
+const compressImage = async (base64String: string, maxWidth = 600, quality = 0.4): Promise<string> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.src = base64String;
@@ -117,6 +117,10 @@ const compressImage = async (base64String: string, maxWidth = 800, quality = 0.5
         width = maxWidth;
       }
 
+      // Ajusta o tamanho para múltiplos de 8 para melhor compressão
+      width = Math.floor(width / 8) * 8;
+      height = Math.floor(height / 8) * 8;
+
       canvas.width = width;
       canvas.height = height;
 
@@ -126,10 +130,24 @@ const compressImage = async (base64String: string, maxWidth = 800, quality = 0.5
         return;
       }
 
+      // Configurações para melhor compressão
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'medium';
+      
       ctx.drawImage(img, 0, 0, width, height);
       
       // Converte para JPEG com qualidade reduzida
       const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+      
+      // Verifica se a compressão foi suficiente
+      const sizeInMB = (compressedBase64.length * 0.75) / (1024 * 1024);
+      if (sizeInMB > 0.5) { // Se ainda maior que 500KB
+        // Tenta comprimir novamente com qualidade ainda menor
+        return compressImage(compressedBase64, maxWidth * 0.8, quality * 0.8)
+          .then(resolve)
+          .catch(reject);
+      }
+      
       resolve(compressedBase64);
     };
 
