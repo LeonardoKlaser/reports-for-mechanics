@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverExternalPackages: ['@playwright/test', '@sparticuz/chromium']
+    serverExternalPackages: ['@playwright/test', 'chrome-aws-lambda']
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -13,6 +13,11 @@ const nextConfig = {
       };
     }
     return config;
+  },
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb' // Aumenta o limite para 10MB
+    }
   }
 }
 

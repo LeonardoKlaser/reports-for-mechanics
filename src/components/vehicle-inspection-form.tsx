@@ -100,8 +100,76 @@ const initialData: VehicleInspectionData = {
   imageCompany: "",
 }
 
+// Função para comprimir imagens
+const compressImage = async (base64String: string, maxWidth = 800, quality = 0.7): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = base64String;
+    
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      let width = img.width;
+      let height = img.height;
+
+      // Redimensiona mantendo a proporção
+      if (width > maxWidth) {
+        height = Math.round((height * maxWidth) / width);
+        width = maxWidth;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('Could not get canvas context'));
+        return;
+      }
+
+      ctx.drawImage(img, 0, 0, width, height);
+      
+      // Converte para JPEG com qualidade reduzida
+      const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+      resolve(compressedBase64);
+    };
+
+    img.onerror = (error) => {
+      reject(error);
+    };
+  });
+};
+
+// Função para comprimir todas as imagens do formulário
+const compressFormImages = async (data: VehicleInspectionData): Promise<VehicleInspectionData> => {
+  const compressedData = { ...data };
+  
+  // Comprime imagens de resumo
+  if (compressedData.summaryImages) {
+    if (compressedData.summaryImages.frontal) {
+      compressedData.summaryImages.frontal = await compressImage(compressedData.summaryImages.frontal);
+    }
+    if (compressedData.summaryImages.traseira) {
+      compressedData.summaryImages.traseira = await compressImage(compressedData.summaryImages.traseira);
+    }
+  }
+
+  // Comprime imagens de condição
+  if (compressedData.images) {
+    const compressedImages: { [key: string]: string } = {};
+    for (const [key, value] of Object.entries(compressedData.images)) {
+      if (value) {
+        compressedImages[key] = await compressImage(value);
+      }
+    }
+    compressedData.images = compressedImages;
+  }
+
+  return compressedData;
+};
+
 export default function VehicleInspectionForm() {
   const [currentStep, setCurrentStep] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const {toast} = useToast();
   const {data: session} = useSession();
 
@@ -145,18 +213,41 @@ export default function VehicleInspectionForm() {
   }
 
   const onSubmit = async(data: VehicleInspectionData) => {
-    debugger
-    const email = session?.user?.email;
-    const response = await fetch("/api/get-user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-    const result = await response.json();
-    const imageCompany = result.image ?? "";
-    const updateData = {...data, imageCompany};
-    onDownload({formData: updateData}, toast);
-    console.log("Gerando PDF com os dados:", updateData);
+    try {
+      setIsSubmitting(true);
+      const email = session?.user?.email;
+      
+      // Busca dados do usuário
+      const response = await fetch("/api/get-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const result = await response.json();
+      const imageCompany = result.image ?? "";
+
+      // Comprime as imagens antes de enviar
+      const compressedData = await compressFormImages(data);
+      const updateData = {...compressedData, imageCompany};
+
+      // Mostra toast de carregamento
+      toast({
+        title: "Gerando PDF",
+        description: "Por favor, aguarde enquanto processamos suas imagens...",
+      });
+
+      await onDownload({formData: updateData}, toast);
+      console.log("PDF gerado com sucesso");
+    } catch (error) {
+      console.error("Erro ao gerar PDF:", error);
+      toast({
+        title: "Erro",
+        description: "Ocorreu um erro ao gerar o PDF. Por favor, tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -170,7 +261,7 @@ export default function VehicleInspectionForm() {
               <CurrentStepComponent />
 
               <div className="flex justify-between mt-6">
-                <Button type="button" variant="outline" onClick={handlePrevious} disabled={currentStep === 0}>
+                <Button type="button" variant="outline" onClick={handlePrevious} disabled={currentStep === 0 || isSubmitting}>
                   Anterior
                 </Button>
 
@@ -179,7 +270,9 @@ export default function VehicleInspectionForm() {
                     Próximo
                   </Button>
                 ) : (
-                  <Button type="submit">Gerar PDF</Button>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Gerando PDF..." : "Gerar PDF"}
+                  </Button>
                 )}
               </div>
             </form>
