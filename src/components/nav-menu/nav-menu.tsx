@@ -26,11 +26,6 @@ export function NavMenu() {
             <Users className="w-5 h-5" />
             <span>Sobre Nós</span>
             </Link>
-            {data?.user && (
-              <Button onClick={() => redirect("/dashboard")}>
-                Dashboard
-              </Button>
-            )}
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -44,11 +39,19 @@ export function NavMenu() {
             <>
               <DropdownMenuItem onClick={() => redirect('/accountPage')}>
                 <Settings className="w-4 h-4 mr-2" />
-                <span>Access Account</span>
+                <span>Acessar Conta</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => logoutAction()}>
                 <LogOut className="w-4 h-4 mr-2" />
-                <span>Logout</span>
+                <span>Sair</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => redirect('/dashboard')}>
+                <Settings className="w-4 h-4 mr-2" />
+                <span>Dashboard</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => redirect('/formularioV2')}>
+                <Settings className="w-4 h-4 mr-2" />
+                <span>Criar Formulario</span>
               </DropdownMenuItem>
             </>
           ) : (
