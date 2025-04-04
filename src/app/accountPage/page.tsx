@@ -4,13 +4,42 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { LogOut } from "lucide-react"
+import { LogOut, ImageIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useToast } from "@/hooks/use-toast"
 
 export default function AccountPage() {
   const {data} = useSession();
   const router = useRouter();
+  const {toast} = useToast();
+  const [companyLogo, setCompanyLogo] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (data?.user?.email) {
+      fetchUserImage();
+    }
+  }, [data?.user?.email]);
+
+
+  const fetchUserImage = async () => {
+    try {
+      const response = await fetch("/api/get-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: data?.user?.email }),
+      });
+      const result = await response.json();
+      if (result.image) {
+        setCompanyLogo(result.image);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar imagem:", error);
+    }
+  };
+
   if(!data?.user){
     router.push('/')
   }
@@ -23,27 +52,42 @@ export default function AccountPage() {
       reader.onerror = reject
     })
 
-  const updateCompanyUpdate = async(event: React.ChangeEvent<HTMLInputElement>)=>{
-    debugger
+  const updateCompanyUpdate = async(event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if(file){
-      const base64Image = await getBase64(file);
-      const email = data?.user?.email;
-      
-      if (!email) {
-        console.error("Erro: Usuário não autenticado");
-        return;
-      }
+      try {
+        setIsLoading(true);
+        const base64Image = await getBase64(file);
+        const email = data?.user?.email;
+        
+        if (!email) {
+          throw new Error("Usuário não autenticado");
+        }
 
-      const response = await fetch("/api/update-image", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, image: base64Image }),
-      });
-      if (!response.ok) {
-        console.error("Erro ao atualizar a imagem");
-      } else {
-        console.log("Imagem atualizada com sucesso");
+        const response = await fetch("/api/update-image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, image: base64Image }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Erro ao atualizar a imagem");
+        }
+
+        setCompanyLogo(base64Image);
+        toast({
+          title: "Sucesso",
+          description: "Logo da empresa atualizada com sucesso!",
+        });
+      } catch (error) {
+        console.error("Erro:", error);
+        toast({
+          title: "Erro",
+          description: "Não foi possível atualizar a logo da empresa.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
       }
     } 
   }
@@ -77,15 +121,37 @@ export default function AccountPage() {
                 <Label htmlFor="company">Empresa</Label>
                 <Input id="company" placeholder={data?.user?.name as string} />
               </div>
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="company">Logo da empresa</Label>
-                <Input
-                  id={"imageProfile"}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => updateCompanyUpdate(e as React.ChangeEvent<HTMLInputElement>)}
-                  className="flex-grow"
-                />
+              <div className="space-y-2">
+                <Label>Logo da empresa</Label>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <div className="w-[200px] h-[100px] border rounded-lg flex items-center justify-center bg-muted">
+                    {companyLogo ? (
+                      <img 
+                        src={companyLogo} 
+                        alt="Logo da Empresa" 
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center text-muted-foreground">
+                        <ImageIcon className="w-8 h-8 mb-2" />
+                        <span className="text-sm">Nenhuma logo definida</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <Input
+                      id="imageProfile"
+                      type="file"
+                      accept="image/*"
+                      onChange={updateCompanyUpdate}
+                      disabled={isLoading}
+                      className="w-full"
+                    />
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Formatos aceitos: JPG, PNG. Tamanho máximo recomendado: 500x250px
+                    </p>
+                  </div>
+                </div>
               </div>
             </CardContent>
             <CardFooter>

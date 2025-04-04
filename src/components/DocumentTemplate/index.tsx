@@ -56,7 +56,6 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
         </style>
       </head>
       <body>
-        <div className="h-[-40px]"></div>
         <header className="relative w-full h-[100px] bg-white flex items-center px-4">
           {/* Faixa diagonal */}
           <div className="absolute top-0 left-0 w-full h-full bg-blue-900" style={{
@@ -69,8 +68,26 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
           </div>
 
           {/* Logo no lado direito */}
-          <div className="relative ml-auto mr-6">
-            <img src={formData.imageCompany} alt="Super Visão" className="w-[220px] h-[100px] object-cover" />
+          <div className="relative ml-auto mr-6 flex items-center justify-center w-[220px] h-[100px] bg-white/10 rounded">
+            {formData.imageCompany ? (
+              <div className="w-full h-full flex items-center justify-center">
+                <img 
+                  src={formData.imageCompany} 
+                  alt="Logo da Empresa" 
+                  className="max-w-full max-h-full object-contain "
+                  style={{ 
+                    width: 'auto',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    display: 'block',
+                    margin: 'auto',
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="text-white text-sm italic"></div>
+            )}
           </div>
         </header>
         <div>

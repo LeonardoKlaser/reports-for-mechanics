@@ -17,6 +17,126 @@ interface ExtendedVehicleInspectionData extends VehicleInspectionData {
   }
 }
 
+interface DataItem {
+  id: string
+  labels: {
+    [key: string]: {
+      label: string
+      infos?: {
+        [key: string]: string
+      }
+    }
+  }
+}
+
+const dataItems: DataItem[] = [
+  {
+    id: "chassi",
+    labels: { 0: { label: "Gravação do Chassi: ", infos: { 0: "Numeração Identificadora", 1: "Chapa Suporte: " } } },
+  },
+  { id: "motor", labels: { 0: { label: "Numeração do Motor" } } },
+  { id: "cambio", labels: { 0: { label: "Numeração do Câmbio" } } },
+  {
+    id: "eta",
+    labels: {
+      0: {
+        label: "Etiquetas de Identificação",
+        infos: { 0: "ETA Motor:", 1: "ETA Batente da Porta:", 2: "ETA Assoalho:", 3: "Plaqueta Ano Fabricação:" },
+      },
+    },
+  },
+  { id: "placas", labels: { 0: { label: "Placa Dianteira" }, 1: { label: "Placa Traseira" } } },
+  {
+    id: "vidros",
+    labels: {
+      0: {
+        label: "Condição do Chassi nos Vidros",
+        infos: {
+          0: "Parabrisa:",
+          1: "Porta Diante. Esq.:",
+          2: "Porta Tras. Esq./Lat Tras. Dir.:",
+          3: "Vigia Traseiro:",
+          4: "Porta Tras.Dir/Lat Tras.Dir.:",
+          5: "Porta Diante.Dir.:",
+        },
+      },
+    },
+  },
+  {
+    id: "estrutura",
+    labels: {
+      0: {
+        label: "Estrutura Veicular - Dianteira",
+        infos: {
+          0: "Longarina Dianteira Esquerda",
+          1: "Longarina Dianteira Direita",
+          2: "Torre do Amortecedor Dianteira Esquerda",
+          3: "Torre do Amortecedor Dianteira Direita",
+          4: "Painel Corta Fogo",
+          5: "Painel Dianteiro Inferior/Superior ou Alma do Para-choque",
+          6: "Crashbox (Parafusado)",
+          7: "Crashbox/Quadro do Radiador (Soldado)",
+          8: "Paralama Interno Dianteiro Direito",
+          9: "Paralama Interno Dianteiro Esquerdo",
+        },
+      },
+      1: {
+        label: "Estrutura Veicular - Traseira",
+        infos: {
+          0: "Longarina Traseira Esquerda",
+          1: "Longarina Traseira Direita",
+          2: "Caixa de Roda Traseira Esquerda",
+          3: "Caixa de Roda Traseira Direita",
+          4: "Painel Traseiro",
+        },
+      },
+      2: {
+        label: "Estrutura Veicular - Laterais",
+        infos: {
+          0: "Folha Lateral Traseira Direita",
+          1: "Folha Lateral Traseira Esquerda",
+          2: "Caixa de Ar Direita",
+          3: "Caixa de Ar Esquerda",
+          4: "Coluna Esquerda (A)",
+          5: "Coluna Esquerda (B)",
+          6: "Coluna Esquerda (C)",
+          7: "Coluna Direita (A)",
+          8: "Coluna Direita (B)",
+          9: "Coluna Direita (C)",
+        },
+      },
+      3: {
+        label: "Estrutura Veicular - Outros",
+        infos: {
+          0: "Assoalho do Monobloco (Habitáculo, Área Visível)",
+          1: "Assoalho do Portamalas / Caçamba",
+          2: "Caixa de Estepe (Divisão Assoalho do Portamalas)",
+          3: "Estrutura do Teto",
+          4: "Folha do Teto",
+        },
+      },
+    },
+  },
+  { id: "historico", labels: { 0: { label: "Histórico Veicular:" } } },
+  { id: "documentacao", labels: { 0: { label: "CRLV/Pesquisa Novo" }, 1: { label: "Veículo Novo" } } },
+]
+
+const fieldLabels: { [key: string]: string } = {
+  reportNumber: "Número do Relatório",
+  inspectionDate: "Data da Inspeção",
+  make: "Marca",
+  model: "Modelo",
+  color: "Cor",
+  year: "Ano do Modelo",
+  yearFab: "Ano de Fabricação",
+  licensePlate: "Placa",
+  vin: "Chassi",
+  odometer: "Quilometragem",
+  combustivel: "Combustível",
+  unidade: "Unidade",
+  cliente: "Cliente"
+}
+
 export default function ReviewStep() {
   const { watch, setValue } = useFormContext<ExtendedVehicleInspectionData>()
   const formData = watch()
@@ -83,12 +203,13 @@ export default function ReviewStep() {
                     "finalNotes",
                     "approvalStatus",
                     "rejectionReason",
+                    "imageCompany"
                   ].includes(key)
                 ) {
                   return (
                     <React.Fragment key={key}>
                       <Label htmlFor={key} className="font-medium">
-                        {key}:
+                        {fieldLabels[key] || key}:
                       </Label>
                       <Input
                         id={key}
@@ -115,11 +236,12 @@ export default function ReviewStep() {
                     "finalNotes",
                     "approvalStatus",
                     "rejectionReason",
+                    "imageCompany"
                   ].includes(key)
                 ) {
                   return (
                     <React.Fragment key={key}>
-                      <div className="font-medium">{key}:</div>
+                      <div className="font-medium">{fieldLabels[key] || key}:</div>
                       <div>{value || "—"}</div>
                     </React.Fragment>
                   )
@@ -248,55 +370,121 @@ export default function ReviewStep() {
                   </div>
                   {details && (
                     <div className="text-sm space-y-2">
-                      {Object.entries(details).map(([labelKey, labelData]) => (
-                        <div key={`${item.id}-${labelKey}`}>
-                          <p className="font-medium">
-                            {typeof labelData === "object" ? labelData || `Detalhe ${labelKey}` : `Detalhe ${labelKey}`}
-                            :
-                          </p>
-                          {editMode === "condition" ? (
-                            typeof labelData === "string" ? (
-                              <Input
-                                value={labelData}
-                                onChange={(e) =>
-                                  setValue(
-                                    `detailFields.${item.id}.${labelKey}` as keyof ExtendedVehicleInspectionData,
-                                    e.target.value,
-                                  )
-                                }
-                              />
-                            ) : (
-                              <div className="pl-4 space-y-2">
-                                {Object.entries(labelData).map(([infoKey, infoValue]) => (
-                                  <div key={`${item.id}-${labelKey}-${infoKey}`}>
-                                    <Label htmlFor={`${item.id}-${labelKey}-${infoKey}`}>{infoKey}</Label>
+                      {Object.entries(details).map(([labelIndex, values]) => {
+                        const itemData = dataItems.find(data => data.id === item.id);
+                        const labelInfo = itemData?.labels[labelIndex];
+
+                        if (!labelInfo) return null;
+
+                        // Função auxiliar para renderizar valores
+                        const renderValue = (value: string | undefined) => value || "—";
+
+                        if (editMode === "condition") {
+                          return (
+                            <div key={`${item.id}-${labelIndex}`}>
+                              <p className="font-medium">{labelInfo.label}</p>
+                              {labelInfo.infos ? (
+                                <div className="pl-4 space-y-2">
+                                  {Object.entries(labelInfo.infos).map(([infoIndex, infoLabel], valueIndex) => (
+                                    <div key={`${item.id}-${labelIndex}-${infoIndex}`}>
+                                      <Label htmlFor={`${item.id}-${labelIndex}-${infoIndex}`}>{infoLabel}</Label>
+                                      <Input
+                                        id={`${item.id}-${labelIndex}-${infoIndex}`}
+                                        value={Array.isArray(values) ? 
+                                          (Array.isArray(values[0]) ? values[0][valueIndex] : values[valueIndex]) || "" 
+                                          : values || ""}
+                                        onChange={(e) => {
+                                          let newValues;
+                                          if (Array.isArray(values)) {
+                                            if (Array.isArray(values[0])) {
+                                              // Para arrays aninhados (como chassi)
+                                              newValues = [[...values[0]]];
+                                              newValues[0][valueIndex] = e.target.value;
+                                            } else {
+                                              // Para arrays simples (como vidros)
+                                              newValues = [...values];
+                                              newValues[valueIndex] = e.target.value;
+                                            }
+                                          } else {
+                                            // Para valores únicos
+                                            newValues = [e.target.value];
+                                          }
+                                          setValue(`detailFields.${item.id}.${labelIndex}`, newValues as never);
+                                        }}
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              ) : (
+                                <div className="pl-4">
+                                  {Array.isArray(values) ? (
+                                    Array.isArray(values[0]) ? (
+                                      // Para arrays aninhados
+                                      values[0].map((value, idx) => (
+                                        <div key={idx} className="mb-2">
+                                          <Input
+                                            value={value || ""}
+                                            onChange={(e) => {
+                                              const newValues = [[...values[0]]];
+                                              newValues[0][idx] = e.target.value;
+                                              setValue(`detailFields.${item.id}.${labelIndex}`, newValues as never);
+                                            }}
+                                          />
+                                        </div>
+                                      ))
+                                    ) : (
+                                      // Para arrays simples
+                                      <Input
+                                        value={values[0] || ""}
+                                        onChange={(e) => setValue(`detailFields.${item.id}.${labelIndex}`, [e.target.value] as never)}
+                                      />
+                                    )
+                                  ) : (
                                     <Input
-                                      id={`${item.id}-${labelKey}-${infoKey}`}
-                                      value={infoValue as string}
-                                      onChange={(e) =>
-                                        setValue(
-                                          `detailFields.${item.id}.${labelKey}.${infoKey}` as keyof ExtendedVehicleInspectionData,
-                                          e.target.value,
-                                        )
-                                      }
+                                      value={values || ""}
+                                      onChange={(e) => setValue(`detailFields.${item.id}.${labelIndex}`, [e.target.value] as never)}
                                     />
-                                  </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        }
+
+                        return (
+                          <div key={`${item.id}-${labelIndex}`}>
+                            <p className="font-medium">{labelInfo.label}</p>
+                            {labelInfo.infos ? (
+                              <div className="pl-4">
+                                {Object.entries(labelInfo.infos).map(([infoIndex, infoLabel], valueIndex) => (
+                                  <p key={`${item.id}-${labelIndex}-${infoIndex}`}>
+                                    <span className="font-medium">{infoLabel}:</span>{" "}
+                                    {Array.isArray(values) ? 
+                                      renderValue(Array.isArray(values[0]) ? values[0][valueIndex] : values[valueIndex])
+                                      : renderValue(values)}
+                                  </p>
                                 ))}
                               </div>
-                            )
-                          ) : typeof labelData === "string" ? (
-                            <p>{labelData}</p>
-                          ) : (
-                            <div className="pl-4">
-                              {Object.entries(labelData).map(([infoKey, infoValue]) => (
-                                <p key={`${item.id}-${labelKey}-${infoKey}`}>
-                                  <span className="font-medium">{infoKey}:</span> {infoValue as string}
-                                </p>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                            ) : (
+                              <div className="pl-4">
+                                {Array.isArray(values) ? (
+                                  Array.isArray(values[0]) ? (
+                                    // Para arrays aninhados
+                                    values[0].map((value, idx) => (
+                                      <p key={idx}>{renderValue(value)}</p>
+                                    ))
+                                  ) : (
+                                    // Para arrays simples
+                                    <p>{renderValue(values[0])}</p>
+                                  )
+                                ) : (
+                                  <p>{renderValue(values)}</p>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
