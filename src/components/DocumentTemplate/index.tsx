@@ -203,8 +203,8 @@ const DocumentTemplate = ({ formData } : RenderPdfProps) => {
                   ].map((item, index) => (
                     <tr key={index} className="border-b border-gray-300">
                       <td className="pl-[15px] w-[5%] text-left">
-                        {formData.conditionChecks[item.checkKey] !== null && (
-                          formData.conditionChecks[item.checkKey] == "ok" ? (
+                        {formData?.conditionChecks[item.checkKey] !== null && (
+                          formData?.conditionChecks[item.checkKey] == "ok" ? (
                             <span className="text-xs font-bold">✔</span>
                           ) : (
                             <span className="text-xs font-bold">✖</span>
